@@ -20,20 +20,6 @@ function renderHome(data) {
   const brand = document.getElementById("top-brand");
   if (brand) brand.textContent = store.name || "Cardápio";
 
-  const heroBottom = document.getElementById("hero-bottom-wrap");
-  const heroImg = document.getElementById("hero-img");
-  if (heroBottom && heroImg) {
-    if (store.heroImage) {
-      heroImg.src = store.heroImage;
-      heroImg.alt = store.name || "";
-      heroBottom.classList.remove("hidden");
-      heroBottom.setAttribute("aria-hidden", "false");
-    } else {
-      heroBottom.classList.add("hidden");
-      heroBottom.setAttribute("aria-hidden", "true");
-    }
-  }
-
   const footAddr = document.getElementById("footer-address");
   if (footAddr) {
     const addr = (store.address || "").trim();
@@ -50,8 +36,18 @@ function renderHome(data) {
   grid.innerHTML = "";
   (data.categories || []).forEach((cat) => {
     const a = document.createElement("a");
-    a.className = "category-card";
-    a.href = `cardapio.html?cat=${encodeURIComponent(cat.id)}`;
+    const th =
+      cat.theme === "pastel"
+        ? "pastel"
+        : cat.theme === "burger"
+          ? "burger"
+          : cat.theme === "pizza"
+            ? "pizza"
+            : cat.theme === "sweet"
+              ? "sweet"
+              : "default";
+    a.className = "category-card category-card--" + th;
+    a.href = `cardapio.html#cat=${encodeURIComponent(cat.id)}`;
     const sub = (cat.subtitle || "").trim();
     a.innerHTML = `
       <span class="category-emoji" aria-hidden="true">${escapeHtml(cat.emoji || "📋")}</span>

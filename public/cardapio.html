@@ -7,7 +7,13 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body class="page-cardapio">
+  <div class="cardapio-top-sheen" aria-hidden="true"></div>
   <header class="bar-top">
+    <nav class="top-menu top-menu--subpage" aria-label="Menu principal">
+      <a href="index.html">Início</a>
+      <a href="index.html#cardapio">Categorias</a>
+      <a href="carrinho.html">Carrinho</a>
+    </nav>
     <div class="bar-row-actions">
       <a class="back-link" href="index.html">← Voltar</a>
       <a class="cart-link" href="carrinho.html">🛒 <span id="cart-badge" class="cart-badge is-empty">0</span></a>
@@ -23,7 +29,7 @@
     🛒 Carrinho <strong data-cart-fab-count>0</strong>
   </a>
 
-  <main class="main narrow">
+  <main class="main narrow cardapio-main">
     <div id="items-root" class="items-list"></div>
   </main>
 

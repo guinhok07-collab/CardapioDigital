@@ -1,33 +1,588 @@
 {
-  "version": 1,
   "store": {
-    "name": "Cardápio Digital",
-    "headline": "Monte seu pedido",
-    "subhead": "Escolha a categoria, adicione itens ao carrinho e finalize no WhatsApp.",
-    "whatsapp": "5511999999999",
-    "address": "",
-    "heroImage": null
+    "name": "Lanches & Pastelaria",
+    "headline": "Cardápio completo — delivery",
+    "subhead": "Escolha Hambúrgueres, Pastelaria, Pizza, Doces ou Bebidas. Todos os itens com descrição.",
+    "whatsapp": "5511983928497",
+    "address": "Av. Domingos Batista de Lima, 598 — delivery (11) 98392-8497"
   },
   "categories": [
     {
-      "id": "exemplo",
-      "title": "Pratos principais",
-      "subtitle": "Exemplo — edite no admin ou no JSON",
-      "emoji": "🍽️",
-      "items": [
+      "id": "hamburgueres",
+      "title": "Hambúrgueres",
+      "emoji": "🍔",
+      "subtitle": "Combos com batata e refrigerante — abaixo: individual, casal ou para grupos.",
+      "theme": "burger",
+      "sections": [
         {
-          "id": "ex-1",
-          "name": "Prato exemplo",
-          "description": "Descrição e ingredientes.",
-          "price": 29.9,
-          "image": null
+          "title": "Combo individual",
+          "subtitle": "1 lanche + batata pequena + refrigerante 350 ml",
+          "items": [
+            {
+              "id": "ci-xbacon",
+              "name": "X-Bacon",
+              "description": "Hambúrguer, mussarela, bacon e molho especial. Acompanha batata pequena e refrigerante 350 ml.",
+              "price": 35
+            },
+            {
+              "id": "ci-xsalada",
+              "name": "X-Salada",
+              "description": "Hambúrguer, mussarela, alface, tomate e molho especial. Acompanha batata pequena e refrigerante 350 ml.",
+              "price": 33
+            },
+            {
+              "id": "ci-xburguer",
+              "name": "X-Burguer",
+              "description": "Hambúrguer, mussarela e molho especial. Acompanha batata pequena e refrigerante 350 ml.",
+              "price": 32
+            },
+            {
+              "id": "ci-bigtasty",
+              "name": "Big Tasty",
+              "description": "Hambúrguer, mussarela, alface, tomate, cebola roxa e molho tasty. Acompanha batata pequena e refrigerante 350 ml.",
+              "price": 39
+            },
+            {
+              "id": "ci-cheddar",
+              "name": "Cheddar",
+              "description": "Hambúrguer, queijo cheddar e cebola caramelizada. Acompanha batata pequena e refrigerante 350 ml.",
+              "price": 37
+            }
+          ]
         },
         {
-          "id": "ex-2",
-          "name": "Bebida exemplo",
-          "description": "350 ml",
-          "price": 6,
-          "image": null
+          "title": "Combo casal",
+          "subtitle": "2 lanches + batata média + 2 refrigerantes 350 ml",
+          "items": [
+            {
+              "id": "cc-xbacon",
+              "name": "X-Bacon",
+              "description": "Hambúrguer, mussarela, bacon e molho especial. Batata média e 2 refrigerantes 350 ml.",
+              "price": 71.5
+            },
+            {
+              "id": "cc-xsalada",
+              "name": "X-Salada",
+              "description": "Hambúrguer, mussarela, alface, tomate e molho especial. Batata média e 2 refrigerantes 350 ml.",
+              "price": 80
+            },
+            {
+              "id": "cc-xburguer",
+              "name": "X-Burguer",
+              "description": "Hambúrguer, mussarela e molho especial. Batata média e 2 refrigerantes 350 ml.",
+              "price": 66
+            },
+            {
+              "id": "cc-bigtasty",
+              "name": "Big Tasty",
+              "description": "Hambúrguer, mussarela, alface, tomate, cebola roxa e molho tasty. Batata média e 2 refrigerantes 350 ml.",
+              "price": 79
+            },
+            {
+              "id": "cc-cheddar",
+              "name": "Cheddar",
+              "description": "Hambúrguer, queijo cheddar e cebola caramelizada. Batata média e 2 refrigerantes 350 ml.",
+              "price": 75
+            }
+          ]
+        },
+        {
+          "title": "Para dividir com os amigos",
+          "subtitle": "4 lanches + batata grande (cheddar e bacon) + refrigerante 2 L",
+          "items": [
+            {
+              "id": "ca-xbacon",
+              "name": "X-Bacon",
+              "description": "Hambúrguer, mussarela, bacon e molho especial. Batata grande com cheddar e bacon + refri 2 L.",
+              "price": 120
+            },
+            {
+              "id": "ca-xsalada",
+              "name": "X-Salada",
+              "description": "Hambúrguer, mussarela, alface, tomate e molho especial. Batata grande com cheddar e bacon + refri 2 L.",
+              "price": 112
+            },
+            {
+              "id": "ca-xburguer",
+              "name": "X-Burguer",
+              "description": "Hambúrguer, mussarela e molho especial. Batata grande com cheddar e bacon + refri 2 L.",
+              "price": 108.5
+            },
+            {
+              "id": "ca-bigtasty",
+              "name": "Big Tasty",
+              "description": "Hambúrguer, mussarela, alface, tomate, cebola roxa e molho tasty. Batata grande com cheddar e bacon + refri 2 L.",
+              "price": 135
+            },
+            {
+              "id": "ca-cheddar",
+              "name": "Cheddar",
+              "description": "Hambúrguer, queijo cheddar e cebola caramelizada. Batata grande com cheddar e bacon + refri 2 L.",
+              "price": 128
+            }
+          ]
+        },
+        {
+          "title": "Para dividir com a galera",
+          "subtitle": "6 lanches + batata grande (cheddar e bacon) + refrigerante 2 L",
+          "items": [
+            {
+              "id": "cg-xbacon",
+              "name": "X-Bacon",
+              "description": "Hambúrguer, mussarela, bacon e molho especial. Batata grande com cheddar e bacon + refri 2 L.",
+              "price": 156
+            },
+            {
+              "id": "cg-xsalada",
+              "name": "X-Salada",
+              "description": "Hambúrguer, mussarela, alface, tomate e molho especial. Batata grande com cheddar e bacon + refri 2 L.",
+              "price": 145
+            },
+            {
+              "id": "cg-xburguer",
+              "name": "X-Burguer",
+              "description": "Hambúrguer, mussarela e molho especial. Batata grande com cheddar e bacon + refri 2 L.",
+              "price": 140
+            },
+            {
+              "id": "cg-bigtasty",
+              "name": "Big Tasty",
+              "description": "Hambúrguer, mussarela, alface, tomate, cebola roxa e molho tasty. Batata grande com cheddar e bacon + refri 2 L.",
+              "price": 179
+            },
+            {
+              "id": "cg-cheddar",
+              "name": "Cheddar",
+              "description": "Hambúrguer, queijo cheddar e cebola caramelizada. Batata grande com cheddar e bacon + refri 2 L.",
+              "price": 168
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pastelaria",
+      "title": "Pastelaria",
+      "emoji": "🥟",
+      "subtitle": "Pastéis salgados, especiais e porções — tudo organizado abaixo.",
+      "theme": "pastel",
+      "sections": [
+        {
+          "title": "Pastéis clássicos",
+          "subtitle": "Massa crocante, recheio tradicional",
+          "items": [
+            {
+              "id": "pc-carne",
+              "name": "Carne moída",
+              "description": "Carne moída temperada com cebola e cheiro-verde.",
+              "price": 9.5
+            },
+            {
+              "id": "pc-frango",
+              "name": "Frango",
+              "description": "Frango desfiado com requeijão cremoso.",
+              "price": 9.5
+            },
+            {
+              "id": "pc-queijo",
+              "name": "Queijo",
+              "description": "Mussarela ou minas (conforme disponibilidade).",
+              "price": 9
+            },
+            {
+              "id": "pc-presunto-queijo",
+              "name": "Presunto e queijo",
+              "description": "Presunto e mussarela derretendo.",
+              "price": 9.5
+            },
+            {
+              "id": "pc-pizza",
+              "name": "Pizza",
+              "description": "Presunto, queijo, molho de tomate e orégano.",
+              "price": 10.5
+            },
+            {
+              "id": "pc-calabresa",
+              "name": "Calabresa",
+              "description": "Calabresa fatiada com cebola.",
+              "price": 10.5
+            },
+            {
+              "id": "pc-bacalhau",
+              "name": "Bacalhau",
+              "description": "Bacalhau desfiado com batata e cebola refogados.",
+              "price": 16
+            },
+            {
+              "id": "pc-camarao",
+              "name": "Camarão",
+              "description": "Camarão com catupiry ou creme (conforme estoque).",
+              "price": 18
+            },
+            {
+              "id": "pc-palmito",
+              "name": "Palmito",
+              "description": "Palmito com catupiry.",
+              "price": 12.5
+            },
+            {
+              "id": "pc-carne-seca",
+              "name": "Carne seca",
+              "description": "Carne seca desfiada com cream cheese.",
+              "price": 14
+            },
+            {
+              "id": "pc-brócolis",
+              "name": "Brócolis com bacon",
+              "description": "Brócolis, bacon e queijo.",
+              "price": 11.5
+            },
+            {
+              "id": "pc-carne-queijo",
+              "name": "Carne com queijo",
+              "description": "Carne moída com mussarela.",
+              "price": 10.5
+            }
+          ]
+        },
+        {
+          "title": "Pastéis especiais",
+          "subtitle": "Recheios maiores / premium",
+          "items": [
+            {
+              "id": "pe-strogonoff",
+              "name": "Strogonoff de frango",
+              "description": "Frango ao molho strogonoff com batata palha.",
+              "price": 16.5
+            },
+            {
+              "id": "pe-costela",
+              "name": "Costela com BBQ",
+              "description": "Costela desfiada com molho barbecue e cebola roxa.",
+              "price": 17.5
+            },
+            {
+              "id": "pe-quatro-queijos",
+              "name": "Quatro queijos",
+              "description": "Mistura de queijos derretidos.",
+              "price": 14.5
+            },
+            {
+              "id": "pe-churrasco",
+              "name": "Churrasco",
+              "description": "Carne de churrasco picada com vinagrete.",
+              "price": 17
+            },
+            {
+              "id": "pe-file-frango",
+              "name": "Filé de frango",
+              "description": "Peito grelhado com queijo.",
+              "price": 15.5
+            },
+            {
+              "id": "pe-file-mignon",
+              "name": "Filé mignon acebolado",
+              "description": "Filé em tiras com cebola caramelizada.",
+              "price": 22
+            },
+            {
+              "id": "pe-salmao",
+              "name": "Salmão com cream cheese",
+              "description": "Salmão grelhado desfiado com cream cheese e ervas.",
+              "price": 24
+            },
+            {
+              "id": "pe-vegetariano",
+              "name": "Vegetariano",
+              "description": "Legumes refogados, palmito e queijo.",
+              "price": 13.5
+            }
+          ]
+        },
+        {
+          "title": "Fritos e porções",
+          "subtitle": "Para acompanhar ou compartilhar",
+          "items": [
+            {
+              "id": "pf-coxinha",
+              "name": "Coxinha de frango",
+              "description": "Unidade — frango com catupiry.",
+              "price": 6.5
+            },
+            {
+              "id": "pf-bolinho-bacalhau",
+              "name": "Bolinho de bacalhau",
+              "description": "Unidade.",
+              "price": 8
+            },
+            {
+              "id": "pf-bolinho-queijo",
+              "name": "Bolinho de queijo",
+              "description": "Unidade — queijo derretendo.",
+              "price": 7
+            },
+            {
+              "id": "pf-kibe",
+              "name": "Kibe",
+              "description": "Unidade — carne e trigo.",
+              "price": 6.5
+            },
+            {
+              "id": "pf-risole-camarao",
+              "name": "Risole de camarão",
+              "description": "Unidade.",
+              "price": 8.5
+            },
+            {
+              "id": "pf-batata-frita",
+              "name": "Porção de batata frita",
+              "description": "Batata palito — porção média.",
+              "price": 18
+            },
+            {
+              "id": "pf-aneis-cebola",
+              "name": "Anéis de cebola",
+              "description": "Porção empanada crocante.",
+              "price": 20
+            },
+            {
+              "id": "pf-mandioca",
+              "name": "Mandioca frita",
+              "description": "Porção com alho e sal.",
+              "price": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pizza",
+      "title": "Pizza",
+      "emoji": "🍕",
+      "subtitle": "Massa média — sabores com ingredientes descritos. Confirme borda recheada no pedido.",
+      "theme": "pizza",
+      "sections": [
+        {
+          "title": "Clássicas",
+          "subtitle": "Molho de tomate e mussarela na base (onde indicado)",
+          "items": [
+            {
+              "id": "pz-margherita",
+              "name": "Margherita",
+              "description": "Molho de tomate, mussarela, rodelas de tomate fresco, manjericão e azeite.",
+              "price": 48
+            },
+            {
+              "id": "pz-calabresa",
+              "name": "Calabresa",
+              "description": "Calabresa fatiada, cebola roxa e orégano sobre mussarela.",
+              "price": 52
+            },
+            {
+              "id": "pz-mussarela",
+              "name": "Mussarela",
+              "description": "Molho de tomate e camada generosa de mussarela.",
+              "price": 45
+            },
+            {
+              "id": "pz-portuguesa",
+              "name": "Portuguesa",
+              "description": "Presunto, ovos cozidos, cebola, pimentão, azeitona e ervilha.",
+              "price": 56
+            },
+            {
+              "id": "pz-napolitana",
+              "name": "Napolitana",
+              "description": "Mussarela, tomate em rodelas, parmesão ralado e alho.",
+              "price": 54
+            }
+          ]
+        },
+        {
+          "title": "Carnes e especiais",
+          "subtitle": "Sabores completos",
+          "items": [
+            {
+              "id": "pz-pepperoni",
+              "name": "Pepperoni",
+              "description": "Fatias de pepperoni com mussarela e orégano.",
+              "price": 58
+            },
+            {
+              "id": "pz-bacon",
+              "name": "Bacon",
+              "description": "Bacon crocante, cebola e mussarela.",
+              "price": 56
+            },
+            {
+              "id": "pz-frango-catupiry",
+              "name": "Frango com catupiry",
+              "description": "Frango desfiado temperado com catupiry original.",
+              "price": 55
+            },
+            {
+              "id": "pz-quatro-queijos",
+              "name": "Quatro queijos",
+              "description": "Mussarela, provolone, parmesão e gorgonzola.",
+              "price": 59
+            },
+            {
+              "id": "pz-carne-seca",
+              "name": "Carne seca com cream cheese",
+              "description": "Carne seca desfiada e toques de cream cheese.",
+              "price": 62
+            },
+            {
+              "id": "pz-vegetariana",
+              "name": "Vegetariana",
+              "description": "Brócolis, palmito, champignon, pimentão e mussarela.",
+              "price": 52
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doces",
+      "title": "Doces",
+      "emoji": "🍫",
+      "subtitle": "Pastéis e sobremesas doces.",
+      "theme": "sweet",
+      "sections": [
+        {
+          "title": "Pastéis doces",
+          "subtitle": "Finalize o pedido com algo doce",
+          "items": [
+            {
+              "id": "pd-nutella-morango",
+              "name": "Nutella com morango",
+              "description": "Creme de avelã com morangos frescos.",
+              "price": 15
+            },
+            {
+              "id": "pd-nutella-banana",
+              "name": "Nutella com banana",
+              "description": "Banana caramelizada com Nutella.",
+              "price": 14
+            },
+            {
+              "id": "pd-romeu-julieta",
+              "name": "Romeu e Julieta",
+              "description": "Goiabada com queijo minas.",
+              "price": 12
+            },
+            {
+              "id": "pd-banana-canela",
+              "name": "Banana com canela",
+              "description": "Banana com mel e canela.",
+              "price": 10.5
+            },
+            {
+              "id": "pd-chocolate",
+              "name": "Chocolate",
+              "description": "Chocolate ao leite ou meio amargo.",
+              "price": 11.5
+            },
+            {
+              "id": "pd-prestigio",
+              "name": "Prestígio",
+              "description": "Coco com chocolate.",
+              "price": 12.5
+            },
+            {
+              "id": "pd-doce-leite",
+              "name": "Doce de leite com coco",
+              "description": "Doce de leite e coco ralado.",
+              "price": 11
+            },
+            {
+              "id": "pd-creme-ninho",
+              "name": "Creme com leite em pó",
+              "description": "Creme leve estilo Ninho.",
+              "price": 13
+            },
+            {
+              "id": "pd-maca-canela",
+              "name": "Maçã com canela",
+              "description": "Maçã em cubos com canela e açúcar.",
+              "price": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bebidas",
+      "title": "Bebidas",
+      "emoji": "🥤",
+      "subtitle": "Refrigerantes, sucos, água e chás gelados.",
+      "theme": "default",
+      "sections": [
+        {
+          "title": "Refrigerantes e água",
+          "subtitle": "",
+          "items": [
+            {
+              "id": "pb-refri-lata",
+              "name": "Refrigerante lata",
+              "description": "350 ml — Coca-Cola, Guaraná, Fanta ou Sprite (conforme estoque).",
+              "price": 6.5
+            },
+            {
+              "id": "pb-refri-600",
+              "name": "Refrigerante 600 ml",
+              "description": "Garrafa PET.",
+              "price": 9
+            },
+            {
+              "id": "pb-refri-2l",
+              "name": "Refrigerante 2 L",
+              "description": "Garrafa família — sabor a combinar.",
+              "price": 14
+            },
+            {
+              "id": "pb-agua-com-gas",
+              "name": "Água com gás",
+              "description": "500 ml.",
+              "price": 5
+            },
+            {
+              "id": "pb-agua-sem-gas",
+              "name": "Água sem gás",
+              "description": "500 ml.",
+              "price": 4.5
+            }
+          ]
+        },
+        {
+          "title": "Sucos e chás",
+          "subtitle": "",
+          "items": [
+            {
+              "id": "pb-suco-laranja",
+              "name": "Suco de laranja",
+              "description": "Natural 400 ml.",
+              "price": 10
+            },
+            {
+              "id": "pb-suco-polpa",
+              "name": "Suco de polpa",
+              "description": "Maracujá, abacaxi ou caju — 400 ml.",
+              "price": 9
+            },
+            {
+              "id": "pb-h2o",
+              "name": "Água saborizada H2O",
+              "description": "500 ml.",
+              "price": 7
+            },
+            {
+              "id": "pb-cha-gelado",
+              "name": "Chá gelado lata",
+              "description": "Pêssego, limão ou mate.",
+              "price": 7.5
+            }
+          ]
         }
       ]
     }

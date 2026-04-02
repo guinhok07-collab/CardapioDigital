@@ -10,11 +10,18 @@
   <div class="top-hero-wrap" aria-hidden="false">
     <header class="top-bar">
       <div class="top-bar-inner">
-        <span class="top-bar-brand" id="top-brand">Cardápio</span>
-        <a class="cart-link" href="carrinho.html">
-          <span aria-hidden="true">🛒</span> Carrinho
-          <span class="cart-badge is-empty" id="cart-badge">0</span>
-        </a>
+        <div class="top-bar-row1">
+          <a href="index.html" class="top-bar-brand" id="top-brand">Cardápio</a>
+          <a class="cart-link" href="carrinho.html">
+            <span aria-hidden="true">🛒</span> Carrinho
+            <span class="cart-badge is-empty" id="cart-badge">0</span>
+          </a>
+        </div>
+        <nav class="top-menu" aria-label="Menu principal">
+          <a href="index.html">Início</a>
+          <a href="index.html#cardapio">Cardápio</a>
+          <a href="carrinho.html">Carrinho</a>
+        </nav>
       </div>
     </header>
 
@@ -31,15 +38,11 @@
     </header>
   </div>
 
-  <main class="main">
+  <main class="main" id="cardapio">
     <h2 class="section-title">Cardápio</h2>
     <p class="section-lead">Toque para ver itens e preços.</p>
     <div id="category-grid" class="category-grid"></div>
   </main>
-
-  <section id="hero-bottom-wrap" class="hero-bottom-wrap hidden" aria-hidden="true">
-    <img id="hero-img" class="hero-img-bottom" src="" alt="" loading="lazy" />
-  </section>
 
   <a class="cart-fab" href="carrinho.html" data-cart-fab hidden>
     <span aria-hidden="true">🛒</span> Carrinho <strong data-cart-fab-count>0</strong>

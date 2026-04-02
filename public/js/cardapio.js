@@ -2,12 +2,6 @@ import { loadMenuData } from "./data-loader.js";
 import { addItem } from "./cart.js";
 import { initCartBadge } from "./cart-badge.js";
 
-function escapeHtml(s) {
-  const d = document.createElement("div");
-  d.textContent = s == null ? "" : String(s);
-  return d.innerHTML;
-}
-
 function formatMoney(n) {
   return Number(n).toLocaleString("pt-BR", {
     style: "currency",
@@ -15,8 +9,29 @@ function formatMoney(n) {
   });
 }
 
-function getQueryCat() {
-  return new URLSearchParams(window.location.search).get("cat") || "";
+function getCatIdFromLocation() {
+  const fromSearch = new URLSearchParams(window.location.search).get("cat");
+  if (fromSearch && String(fromSearch).trim()) return String(fromSearch).trim();
+  if (window.location.hash && window.location.hash.length > 1) {
+    const hp = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const fromHash = hp.get("cat");
+    if (fromHash && String(fromHash).trim()) return String(fromHash).trim();
+  }
+  return "";
+}
+
+function applyCategoryTheme(theme) {
+  const body = document.body;
+  body.classList.remove(
+    "cardapio-theme-burger",
+    "cardapio-theme-pastel",
+    "cardapio-theme-pizza",
+    "cardapio-theme-sweet",
+    "cardapio-theme-default"
+  );
+  const allowed = ["burger", "pastel", "pizza", "sweet", "default"];
+  const t = allowed.includes(theme) ? theme : "default";
+  body.classList.add("cardapio-theme-" + t);
 }
 
 function toast(msg) {
@@ -34,28 +49,180 @@ function toast(msg) {
   toast._timer = setTimeout(() => t.classList.remove("is-visible"), 2000);
 }
 
-async function init() {
-  initCartBadge();
-  const catId = getQueryCat();
-  const root = document.getElementById("items-root");
-  if (!catId) {
-    window.location.href = "index.html";
-    return;
+function escapeHtml(s) {
+  const d = document.createElement("div");
+  d.textContent = s == null ? "" : String(s);
+  return d.innerHTML;
+}
+
+/** Fotos demonstração (Unsplash) — substitua por URLs próprias no JSON se quiser. */
+const U = "https://images.unsplash.com";
+const DEMO_IMG = {
+  burger: `${U}/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&h=400&q=82`,
+  burger2: `${U}/photo-1550547660-d9450f859349?auto=format&fit=crop&w=400&h=400&q=82`,
+  bacon: `${U}/photo-1553979459-b859fc4b6b29?auto=format&fit=crop&w=400&h=400&q=82`,
+  salad: `${U}/photo-1526318896980-cf78c088247c?auto=format&fit=crop&w=400&h=400&q=82`,
+  cheese: `${U}/photo-1550317138-10000687a94b?auto=format&fit=crop&w=400&h=400&q=82`,
+  tasty: `${U}/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=400&h=400&q=82`,
+  pizza: `${U}/photo-1513104890138-7c7496599c91?auto=format&fit=crop&w=400&h=400&q=82`,
+  pizzaMeat: `${U}/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=400&h=400&q=82`,
+  pastel: `${U}/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=400&h=400&q=82`,
+  fries: `${U}/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=400&h=400&q=82`,
+  fried: `${U}/photo-1562967914-608f82629710?auto=format&fit=crop&w=400&h=400&q=82`,
+  sweet: `${U}/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=400&h=400&q=82`,
+  drink: `${U}/photo-1544145945-f0a224ac7a5e?auto=format&fit=crop&w=400&h=400&q=82`,
+  juice: `${U}/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=400&h=400&q=82`,
+};
+
+function resolveDemoImage(item, categoryTheme) {
+  if (item.image && String(item.image).trim()) return String(item.image).trim();
+  const t = `${item.name || ""} ${item.description || ""}`.toLowerCase();
+  const th = categoryTheme || "default";
+
+  if (th === "pizza") {
+    if (/pepperoni|bacon|calabresa|carne seca|frango com|quatro queijos/.test(t))
+      return DEMO_IMG.pizzaMeat;
+    return DEMO_IMG.pizza;
   }
+  if (th === "sweet") return DEMO_IMG.sweet;
+  if (th === "default") {
+    if (/suco|laranja|polpa|maracujá|abacaxi|caju/.test(t)) return DEMO_IMG.juice;
+    return DEMO_IMG.drink;
+  }
+  if (th === "pastel") {
+    if (/coxinha|kibe|risole|bolinho/.test(t)) return DEMO_IMG.fried;
+    if (/batata|mandioca|anéis|porção/.test(t)) return DEMO_IMG.fries;
+    return DEMO_IMG.pastel;
+  }
+  if (th === "burger") {
+    if (/x-bacon/.test(t)) return DEMO_IMG.bacon;
+    if (/x-salada/.test(t)) return DEMO_IMG.salad;
+    if (/big tasty/.test(t)) return DEMO_IMG.tasty;
+    if (/cheddar/.test(t)) return DEMO_IMG.cheese;
+    if (/x-burguer/.test(t)) return DEMO_IMG.burger2;
+    return DEMO_IMG.burger;
+  }
+  return DEMO_IMG.burger;
+}
+
+function buildItemCard(item, catId, catTitle, sectionTitle, categoryTheme) {
+  const displayName = sectionTitle
+    ? `${sectionTitle} — ${item.name}`
+    : item.name;
+
+  const art = document.createElement("article");
+  art.className = "item-card";
+  const imgWrap = document.createElement("div");
+  imgWrap.className = "item-img-wrap";
+  const src = resolveDemoImage(item, categoryTheme);
+  const img = document.createElement("img");
+  img.src = src;
+  img.alt = item.name || "Produto";
+  img.className = "item-img";
+  img.loading = "lazy";
+  img.decoding = "async";
+  img.referrerPolicy = "no-referrer";
+  img.addEventListener("error", () => {
+    img.remove();
+    imgWrap.classList.add("item-img-placeholder");
+    imgWrap.innerHTML = "";
+    imgWrap.setAttribute("aria-hidden", "true");
+  });
+  imgWrap.appendChild(img);
+  const bodyEl = document.createElement("div");
+  bodyEl.className = "item-body";
+  bodyEl.innerHTML = `
+    <h2>${escapeHtml(item.name)}</h2>
+    <p class="item-desc">${escapeHtml(item.description || "")}</p>
+    <div class="item-price">${formatMoney(item.price)}</div>
+  `;
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn-add-cart";
+  btn.textContent = "Adicionar ao carrinho";
+  btn.addEventListener("click", () => {
+    addItem({
+      catId,
+      catTitle,
+      item: {
+        id: item.id,
+        name: displayName,
+        price: item.price,
+      },
+    });
+    toast("Adicionado ao carrinho");
+  });
+  bodyEl.appendChild(btn);
+  art.appendChild(imgWrap);
+  art.appendChild(bodyEl);
+  return art;
+}
+
+function renderCategoryPicker(root, categories, storeName) {
+  applyCategoryTheme("default");
+  document.title = `Cardápio — ${storeName || "Cardápio"}`;
+  const titleEl = document.getElementById("cat-title");
+  if (titleEl) titleEl.textContent = "Escolha uma categoria";
+  const em = document.getElementById("cat-emoji");
+  if (em) {
+    em.textContent = "📋";
+    em.style.display = "";
+  }
+  const subEl = document.getElementById("cat-subtitle");
+  if (subEl) {
+    subEl.textContent = "Hambúrgueres, pastéis, pizza, doces e bebidas — toque para ver tudo.";
+    subEl.hidden = false;
+  }
+  const links = (categories || [])
+    .map((c) => {
+      const id = encodeURIComponent(c.id);
+      const label = escapeHtml(c.title || c.id);
+      const sub = (c.subtitle || "").trim();
+      const subHtml = sub
+        ? `<span class="picker-sub">${escapeHtml(sub)}</span>`
+        : "";
+      return `<a class="picker-link" href="#cat=${id}">${label}${subHtml}</a>`;
+    })
+    .join("");
+  root.className = "items-list";
+  root.innerHTML = `
+    <div class="category-picker">
+      <p class="picker-lead">Selecione abaixo ou volte ao <a href="index.html#cardapio">início</a>.</p>
+      <div class="picker-list">${links}</div>
+    </div>`;
+}
+
+async function renderCardapio() {
+  const catId = getCatIdFromLocation();
+  const root = document.getElementById("items-root");
+  if (!root) return;
 
   try {
     const data = await loadMenuData();
     const store = data.store || {};
-    const cat = (data.categories || []).find((c) => c.id === catId);
+    const categories = data.categories || [];
+
+    if (!catId) {
+      renderCategoryPicker(root, categories, store.name);
+      return;
+    }
+
+    const cat = categories.find((c) => c.id === catId);
     if (!cat) {
+      applyCategoryTheme("default");
+      root.className = "items-list";
       root.innerHTML = `<p class="error-msg">Categoria não encontrada.</p>`;
       return;
     }
+    applyCategoryTheme(cat.theme);
     document.title = `${cat.title} — ${store.name || "Cardápio"}`;
-    document.getElementById("cat-title").textContent = cat.title;
+    const titleNode = document.getElementById("cat-title");
+    if (titleNode) titleNode.textContent = cat.title;
     const em = document.getElementById("cat-emoji");
-    em.textContent = cat.emoji || "";
-    em.style.display = cat.emoji ? "" : "none";
+    if (em) {
+      em.textContent = cat.emoji || "";
+      em.style.display = cat.emoji ? "" : "none";
+    }
     const subEl = document.getElementById("cat-subtitle");
     if (subEl) {
       const sub = (cat.subtitle || "").trim();
@@ -63,50 +230,50 @@ async function init() {
       subEl.hidden = !sub;
     }
 
+    const catTitle = cat.title || "Item";
+    root.className = "items-list cardapio-items-panel";
     root.innerHTML = "";
-    (cat.items || []).forEach((item) => {
-      const art = document.createElement("article");
-      art.className = "item-card";
-      const imgWrap = document.createElement("div");
-      imgWrap.className = "item-img-wrap";
-      if (item.image) {
-        const img = document.createElement("img");
-        img.src = item.image;
-        img.alt = "";
-        img.className = "item-img";
-        imgWrap.appendChild(img);
-      } else {
-        imgWrap.classList.add("item-img-placeholder");
-        imgWrap.setAttribute("aria-hidden", "true");
-      }
-      const body = document.createElement("div");
-      body.className = "item-body";
-      body.innerHTML = `
-        <h2>${escapeHtml(item.name)}</h2>
-        <p class="item-desc">${escapeHtml(item.description || "")}</p>
-        <div class="item-price">${formatMoney(item.price)}</div>
-      `;
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "btn-add-cart";
-      btn.textContent = "Adicionar ao carrinho";
-      btn.addEventListener("click", () => {
-        addItem({
-          catId,
-          catTitle: cat.title,
-          item: { id: item.id, name: item.name, price: item.price },
+
+    const sections = cat.sections;
+    if (sections && Array.isArray(sections) && sections.length > 0) {
+      sections.forEach((sec) => {
+        const st = (sec.title || "").trim();
+        const h = document.createElement("h3");
+        h.className = "menu-section-title";
+        h.textContent = st || "Itens";
+        root.appendChild(h);
+        const lead = (sec.subtitle || "").trim();
+        if (lead) {
+          const p = document.createElement("p");
+          p.className = "menu-section-lead";
+          p.textContent = lead;
+          root.appendChild(p);
+        }
+        (sec.items || []).forEach((item) => {
+          root.appendChild(
+            buildItemCard(item, catId, catTitle, st || null, cat.theme)
+          );
         });
-        toast("Adicionado ao carrinho");
       });
-      body.appendChild(btn);
-      art.appendChild(imgWrap);
-      art.appendChild(body);
-      root.appendChild(art);
-    });
+    } else {
+      (cat.items || []).forEach((item) => {
+        root.appendChild(buildItemCard(item, catId, catTitle, null, cat.theme));
+      });
+    }
   } catch (e) {
+    applyCategoryTheme("default");
+    root.className = "items-list";
     root.innerHTML = `<p class="error-msg">Erro ao carregar itens.</p>`;
     console.error(e);
   }
+}
+
+function init() {
+  initCartBadge();
+  renderCardapio();
+  window.addEventListener("hashchange", () => {
+    renderCardapio();
+  });
 }
 
 init();

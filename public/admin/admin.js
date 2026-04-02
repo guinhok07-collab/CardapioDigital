@@ -49,19 +49,19 @@
     $("f-headline").value = s.headline || "";
     $("f-subhead").value = s.subhead || "";
     $("f-address").value = s.address || "";
-    $("f-hero").value = s.heroImage || "";
   }
 
   function readStoreForm() {
-    var h = $("f-hero").value.trim();
     menuData.store = {
       name: $("f-name").value.trim() || "Cardápio Digital",
       headline: $("f-headline").value.trim() || "Monte seu pedido",
       subhead: $("f-subhead").value.trim() || "",
       whatsapp: $("f-wa").value.replace(/\D/g, "") || "5511999999999",
       address: $("f-address").value.trim() || "",
-      heroImage: h || null,
     };
+    if (menuData.store && "heroImage" in menuData.store) {
+      delete menuData.store.heroImage;
+    }
   }
 
   function renderItem(ci, ii, item) {
@@ -162,7 +162,26 @@
         ci +
         '" data-field="subtitle" value="' +
         escapeAttr(cat.subtitle || "") +
-        '" /></label></div>' +
+        '" /></label>' +
+        '<label class="cat-theme-label">Tema visual <select data-ci="' +
+        ci +
+        '" data-field="theme">' +
+        '<option value="default"' +
+        (cat.theme === "default" || !cat.theme ? " selected" : "") +
+        '>Padrão</option>' +
+        '<option value="burger"' +
+        (cat.theme === "burger" ? " selected" : "") +
+        '>Hambúrguer</option>' +
+        '<option value="pastel"' +
+        (cat.theme === "pastel" ? " selected" : "") +
+        '>Pastelaria</option>' +
+        '<option value="pizza"' +
+        (cat.theme === "pizza" ? " selected" : "") +
+        '>Pizza</option>' +
+        '<option value="sweet"' +
+        (cat.theme === "sweet" ? " selected" : "") +
+        '>Doces</option>' +
+        "</select></label></div>" +
         '<button type="button" class="btn-sm rm-cat" data-ci="' +
         ci +
         '">Remover categoria</button>' +
@@ -179,9 +198,12 @@
         wrap.appendChild(renderItem(ci, ii, item));
       });
 
-      box.querySelectorAll(".cat-grid input, .cat-sub input").forEach(function (inp) {
-        inp.addEventListener("input", syncCat);
-      });
+      box
+        .querySelectorAll(".cat-grid input, .cat-sub input, .cat-theme-label select")
+        .forEach(function (inp) {
+          inp.addEventListener("input", syncCat);
+          inp.addEventListener("change", syncCat);
+        });
       box.querySelector(".rm-cat").addEventListener("click", function () {
         menuData.categories.splice(ci, 1);
         readStoreForm();
@@ -204,14 +226,16 @@
 
   function syncAll() {
     readStoreForm();
-    document.querySelectorAll(".cat-grid input, .cat-sub input").forEach(function (inp) {
-      var ci = +inp.dataset.ci;
-      var f = inp.getAttribute("data-field");
-      var v = inp.value;
-      if (f === "id") v = slugify(v);
-      if (f === "subtitle") v = v.trim();
-      menuData.categories[ci][f] = v;
-    });
+    document
+      .querySelectorAll(".cat-grid input, .cat-sub input, .cat-theme-label select")
+      .forEach(function (inp) {
+        var ci = +inp.dataset.ci;
+        var f = inp.getAttribute("data-field");
+        var v = inp.value;
+        if (f === "id") v = slugify(v);
+        if (f === "subtitle") v = v.trim();
+        menuData.categories[ci][f] = v;
+      });
     document.querySelectorAll(".item-grid input").forEach(function (inp) {
       var ci = +inp.dataset.ci;
       var ii = +inp.dataset.ii;
@@ -246,7 +270,7 @@
         showPanel();
         if (!storeBound) {
           storeBound = true;
-          ["f-name", "f-wa", "f-headline", "f-subhead", "f-address", "f-hero"].forEach(function (id) {
+          ["f-name", "f-wa", "f-headline", "f-subhead", "f-address"].forEach(function (id) {
             $(id).addEventListener("input", readStoreForm);
           });
         }
@@ -288,6 +312,7 @@
       title: "Nova",
       subtitle: "",
       emoji: "📋",
+      theme: "default",
       items: [],
     });
     renderCats();
