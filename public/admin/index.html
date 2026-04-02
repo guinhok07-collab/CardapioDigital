@@ -9,9 +9,10 @@
 <body>
   <div id="login-section" class="card">
     <h1>Cardápio Digital — Admin</h1>
-    <p class="muted">Senha para editar o cardápio.</p>
-    <form id="login-form" class="stack">
-      <label>Senha <input type="password" id="login-password" required /></label>
+    <p class="muted">Utilizador e senha definidos em <code>admin.js</code> (edite lá antes de publicar).</p>
+    <form id="login-form" class="stack" autocomplete="on">
+      <label>Login ou e-mail <input type="text" id="login-user" name="username" autocomplete="username" required /></label>
+      <label>Senha <input type="password" id="login-password" name="password" autocomplete="current-password" required /></label>
       <button type="submit">Entrar</button>
     </form>
     <p id="login-error" class="err hidden"></p>

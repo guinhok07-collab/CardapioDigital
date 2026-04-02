@@ -1,9 +1,17 @@
 (function () {
   /**
-   * Senha do painel — altere antes de publicar (o ficheiro fica no repositório).
-   * Não há servidor: quem tiver este ficheiro pode ver a senha.
+   * Credenciais do painel — substitua pelos SEUS dados antes de publicar.
+   * Aviso: isto é só verificação no browser; o ficheiro fica no site — não use a mesma senha de outros serviços.
+   * Para e-mail, a comparação ignora maiúsculas/minúsculas.
    */
-  var ADMIN_PASSWORD = "admin123";
+  var ADMIN_LOGIN = "seu@email.com";
+  var ADMIN_PASSWORD = "suaSenhaAqui";
+
+  function normalizeLogin(s) {
+    s = String(s || "").trim();
+    if (s.indexOf("@") !== -1) return s.toLowerCase();
+    return s;
+  }
 
   var SESSION_KEY = "cardapio_admin_ok_v1";
   var STORAGE_PREVIEW = "cardapio_menu_preview_v1";
@@ -478,12 +486,16 @@
   $("login-form").addEventListener("submit", function (e) {
     e.preventDefault();
     $("login-error").classList.add("hidden");
-    if ($("login-password").value !== ADMIN_PASSWORD) {
-      $("login-error").textContent = "Senha incorreta.";
+    var okUser =
+      normalizeLogin($("login-user").value) === normalizeLogin(ADMIN_LOGIN);
+    var okPass = $("login-password").value === ADMIN_PASSWORD;
+    if (!okUser || !okPass) {
+      $("login-error").textContent = "Login ou senha incorretos.";
       $("login-error").classList.remove("hidden");
       return;
     }
     sessionStorage.setItem(SESSION_KEY, "1");
+    $("login-user").value = "";
     $("login-password").value = "";
     start();
   });
