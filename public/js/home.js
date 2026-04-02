@@ -12,6 +12,38 @@ function escapeHtml(s) {
   return d.innerHTML;
 }
 
+/** Primeira palavra em destaque (POINT), resto na faixa (do Roger). */
+function splitStoreName(name) {
+  const s = (name || "Point do Roger").trim();
+  const parts = s.split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return { first: "POINT", rest: "" };
+  return {
+    first: parts[0].toUpperCase(),
+    rest: parts.slice(1).join(" "),
+  };
+}
+
+function applyStoreWordmark(name) {
+  const { first, rest } = splitStoreName(name);
+  const label = (name || "Point do Roger").trim();
+  const l1 = document.getElementById("store-name-line1");
+  const l2 = document.getElementById("store-name-line2");
+  const t1 = document.getElementById("top-brand-line1");
+  const t2 = document.getElementById("top-brand-line2");
+  const heading = document.getElementById("store-name-heading");
+  if (l1) l1.textContent = first;
+  if (l2) l2.textContent = rest;
+  const ribbon = document.querySelector(".home-brand-logo__ribbon");
+  if (ribbon) {
+    ribbon.hidden = !rest;
+  }
+  if (t1) t1.textContent = first;
+  if (t2) t2.textContent = rest || " ";
+  if (heading) heading.setAttribute("aria-label", label);
+  const top = document.getElementById("top-brand");
+  if (top) top.setAttribute("aria-label", label);
+}
+
 function applyHomeHeroImage(store) {
   const el = document.getElementById("home-hero-bg");
   if (!el) return;
@@ -30,8 +62,7 @@ function applyHomeHeroImage(store) {
 
 function renderHome(data) {
   const store = data.store || {};
-  document.getElementById("store-name").textContent =
-    store.name || "Point do Roger";
+  applyStoreWordmark(store.name);
 
   const tagline = (store.headline || "").trim();
   const tagEl = document.getElementById("headline");
@@ -64,7 +95,6 @@ function renderHome(data) {
     }
     if (brand) {
       brand.classList.remove("hidden");
-      brand.textContent = store.name || "Point do Roger";
     }
   }
 
