@@ -39,33 +39,35 @@ function bindAdd(btn, item, catId, catTitle, sectionTitle, onToast) {
   });
 }
 
-const U = "https://images.unsplash.com";
-
-/** Uma foto circular por tema — imagens meramente ilustrativas (aviso no HTML). */
+/**
+ * Fotos por categoria (Pexels — URLs testadas).
+ * Opcional no JSON: `posterImageUrl` na categoria sobrescreve o tema.
+ * Imagens meramente ilustrativas (aviso no HTML).
+ */
 const POSTER_PHOTO_ONE = {
   burger: {
-    src: `${U}/photo-1568901346375-23c945677c61?auto=format&fit=crop&w=720&h=720&q=88`,
-    alt: "Hambúrguer artesanal com queijo derretido",
+    src: "https://images.pexels.com/photos/1639562/pexels-photo-1639562.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
+    alt: "Hambúrguer artesanal",
   },
   combo: {
-    src: `${U}/photo-1555992336-cbf0c433c5cf?auto=format&fit=crop&w=720&h=720&q=88`,
-    alt: "Hambúrguer com batata frita e molho",
+    src: "https://images.pexels.com/photos/1566837/pexels-photo-1566837.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
+    alt: "Lanche com batata frita",
   },
   pastel: {
-    src: `${U}/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=720&h=720&q=88`,
-    alt: "Pastéis fritos crocantes",
+    src: "https://images.pexels.com/photos/410648/pexels-photo-410648.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
+    alt: "Pastéis e salgados",
   },
   pizza: {
-    src: `${U}/photo-1513104890138-7c7496599c91?auto=format&fit=crop&w=720&h=720&q=88`,
-    alt: "Pizza com queijo e ingredientes",
+    src: "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
+    alt: "Pizza com ingredientes",
   },
   sweet: {
-    src: `${U}/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=720&h=720&q=88`,
+    src: "https://images.pexels.com/photos/1343504/pexels-photo-1343504.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
     alt: "Sobremesa doce",
   },
   drinks: {
-    src: `${U}/photo-1544145945-f0a224ac7a5e?auto=format&fit=crop&w=720&h=720&q=88`,
-    alt: "Refrigerantes e bebidas geladas",
+    src: "https://images.pexels.com/photos/5946965/pexels-photo-5946965.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop",
+    alt: "Bebidas geladas",
   },
 };
 
@@ -95,7 +97,8 @@ function posterPhotoThemeForCat(cat) {
   if (th === "pizza") return "pizza";
   if (th === "pastel") return "pastel";
   if (th === "sweet") return "sweet";
-  if (th === "burger") return "burger";
+  if (th === "burger") return id === "hamburgueres" ? "combo" : "burger";
+  if (th === "default" && id === "bebidas") return "drinks";
   return "burger";
 }
 
@@ -154,22 +157,33 @@ function appendBurgerSection(container, sec, catId, catTitle, onToast, burgerSty
 
 function buildPosterPhotoColumn(cat) {
   const theme = posterPhotoThemeForCat(cat);
-  const shot = POSTER_PHOTO_ONE[theme] || POSTER_PHOTO_ONE.burger;
+  const base = POSTER_PHOTO_ONE[theme] || POSTER_PHOTO_ONE.burger;
+  const custom = String(cat.posterImageUrl || "").trim();
+  const shot = custom ? { src: custom, alt: base.alt } : base;
+  const fallbackSrc = POSTER_PHOTO_ONE.burger.src;
+
   const photos = document.createElement("div");
   photos.className = "burger-poster-photos";
-  photos.innerHTML = `
-    <figure class="burger-poster-shot burger-poster-shot--single">
-      <img
-        src="${shot.src}"
-        alt="${escapeHtml(shot.alt)}"
-        width="360"
-        height="360"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-        referrerpolicy="no-referrer"
-      />
-    </figure>`;
+  const fig = document.createElement("figure");
+  fig.className = "burger-poster-shot burger-poster-shot--single";
+  const img = document.createElement("img");
+  img.src = shot.src;
+  img.alt = shot.alt;
+  img.width = 360;
+  img.height = 360;
+  img.loading = "eager";
+  img.fetchPriority = "high";
+  img.decoding = "async";
+  img.referrerPolicy = "no-referrer";
+  img.addEventListener("error", function onImgErr() {
+    img.removeEventListener("error", onImgErr);
+    if (img.src !== fallbackSrc) {
+      img.src = fallbackSrc;
+    }
+  });
+  fig.appendChild(img);
+  photos.appendChild(fig);
+
   const disc = document.createElement("p");
   disc.className = "burger-poster-disclaimer";
   disc.textContent =
