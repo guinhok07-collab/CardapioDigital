@@ -82,43 +82,93 @@ export function formatMoney(n) {
 
 function formatOrderMode(mode) {
   if (mode === "local") return "Comer agora (no local)";
-  if (mode === "takeaway") return "Para levar";
+  if (mode === "takeaway") return "Para levar (retirada)";
+  if (mode === "delivery") return "Entrega";
   return String(mode || "-");
 }
 
-export function buildWhatsappText({ name, store, lines, customer }) {
-  const storeName = name || "Point do Roger";
-  const waLines = (lines || [])
-    .map((L) => {
+/** Número único por envio (data + hora + ms + aleatório). */
+export function generateOrderNumber() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  const datePart = `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`;
+  const timePart = `${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+  const ms = String(d.getMilliseconds()).padStart(3, "0");
+  const rnd = Math.floor(10 + Math.random() * 89);
+  return `${datePart}-${timePart}${ms}-${rnd}`;
+}
+
+/** Evita que * do usuário quebre negrito no WhatsApp */
+function waSafe(s) {
+  return String(s == null ? "" : s).replace(/\*/g, "·");
+}
+
+function sectionTitle(emoji, label) {
+  return `\n*━━ ${emoji} ${label} ━━*\n`;
+}
+
+export function buildWhatsappText({ name, store, lines, customer, orderNumber }) {
+  const storeName = waSafe(name || "Point do Roger");
+  const ord = waSafe(orderNumber || "—");
+  const list = lines || [];
+  const waLines = list
+    .map((L, i) => {
       const sub = (Number(L.price) || 0) * (L.qty || 0);
-      return `• ${L.qty}x ${L.name} — ${formatMoney(sub)}`;
+      const n = i + 1;
+      return `*${n}) ${L.qty}x ${waSafe(L.name)} — ${formatMoney(sub)}*`;
     })
     .join("\n");
-  const total = (lines || []).reduce(
+  const total = list.reduce(
     (s, L) => s + (Number(L.price) || 0) * (L.qty || 0),
     0
   );
-  let t = `*Pedido — ${storeName}*\n\n`;
-  t += `*Nome:* ${customer.name || "-"}\n`;
-  t += `*Telefone:* ${customer.phone || "-"}\n`;
-  t += `*Consumo:* ${formatOrderMode(customer.orderMode)}\n`;
-  t += `*Rua:* ${(customer.street || "").trim() || "-"}\n`;
-  t += `*Número:* ${(customer.number || "").trim() || "-"}\n`;
-  t += `*Bairro:* ${(customer.neighborhood || "").trim() || "-"}\n`;
-  t += `*Pagamento:* ${customer.payment || "-"}\n`;
+
+  let t = "";
+  t += `*🧾 PEDIDO #${ord}*\n`;
+  t += `*${storeName}*\n`;
+
+  t += sectionTitle("👤", "CLIENTE");
+  t += `*Nome:* ${waSafe(customer.name)}\n`;
+  t += `*Telefone:* ${waSafe(customer.phone)}\n`;
+  t += `*Tipo: ${formatOrderMode(customer.orderMode)}*\n`;
+
+  const st = (customer.street || "").trim();
+  const num = (customer.number || "").trim();
+  const neigh = (customer.neighborhood || "").trim();
+  const hasAddr = !!(st || num || neigh);
+  const isDelivery = customer.orderMode === "delivery";
+
+  if (isDelivery || hasAddr) {
+    t += sectionTitle("📍", isDelivery ? "ENTREGA" : "ENDEREÇO / REF.");
+    t += `*Rua:* ${waSafe(st) || "—"}\n`;
+    t += `*Nº:* ${waSafe(num) || "—"}\n`;
+    t += `*Bairro:* ${waSafe(neigh) || "—"}\n`;
+  }
+
+  t += sectionTitle("🛒", "ITENS DO PEDIDO");
+  t += waLines || "*_(nenhum item)_*";
+  t += `\n\n*💰 TOTAL:* *${formatMoney(total)}*`;
+
+  t += sectionTitle("💳", "PAGAMENTO");
   const pay = customer.payment || "";
+  t += `*${waSafe(pay) || "—"}*\n`;
   if (pay === "PIX" && (store.pixKey || "").trim()) {
     t += `*Chave PIX:* ${String(store.pixKey).trim()}\n`;
-    t += `_Envie o comprovante deste chat após pagar._\n`;
+    t += `_Envie o comprovante neste chat após pagar._\n`;
   }
   if (pay === "Cartão online") {
-    t += `_Cliente deve usar o link de cartão; confirme o recebimento._\n`;
+    t += `_Cliente usa o link de cartão; confirme o recebimento._\n`;
   }
-  t += `\n`;
-  t += `*Itens:*\n${waLines || "(nenhum)"}\n\n`;
-  t += `*Total:* ${formatMoney(total)}\n`;
+
   const notes = (customer.notes || "").trim();
-  if (notes) t += `\n_Observações:_ ${notes}`;
+  t += sectionTitle("📝", "OBSERVAÇÕES");
+  if (notes) {
+    t += `*${waSafe(notes)}*\n`;
+  } else {
+    t += `_Nenhuma observação._\n`;
+  }
+
+  t += `\n*#${ord}* _← use este número para localizar o pedido_\n`;
   return t;
 }
 

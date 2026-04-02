@@ -8,6 +8,7 @@ import {
   formatMoney,
   buildWhatsappText,
   openWhatsappOrder,
+  generateOrderNumber,
 } from "./cart.js";
 
 function escapeHtml(s) {
@@ -171,8 +172,32 @@ function render() {
   totalEl.textContent = formatMoney(getSubtotal());
 }
 
+function syncOrderModeAddress(form) {
+  if (!form) return;
+  const fd = new FormData(form);
+  const mode = String(fd.get("orderMode") || "");
+  const needAddr = mode === "delivery";
+  const street = form.querySelector('[name="street"]');
+  const number = form.querySelector('[name="number"]');
+  const neigh = form.querySelector('[name="neighborhood"]');
+  const wrap = document.getElementById("address-fields");
+  [street, number, neigh].forEach((el) => {
+    if (!el) return;
+    if (needAddr) el.setAttribute("required", "");
+    else el.removeAttribute("required");
+  });
+  if (wrap) wrap.classList.toggle("address-fields--delivery", needAddr);
+}
+
 const checkoutForm = document.getElementById("checkout-form");
 if (checkoutForm) {
+  checkoutForm.addEventListener("change", (ev) => {
+    if (ev.target && ev.target.name === "orderMode") {
+      syncOrderModeAddress(checkoutForm);
+    }
+  });
+  syncOrderModeAddress(checkoutForm);
+
   checkoutForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const lines = getLines();
@@ -192,19 +217,15 @@ if (checkoutForm) {
       payment: String(fd.get("payment") || "").trim(),
       notes: String(fd.get("notes") || "").trim(),
     };
-    if (
-      !customer.name ||
-      !customer.phone ||
-      !customer.orderMode ||
-      !customer.payment ||
-      !customer.street ||
-      !customer.number ||
-      !customer.neighborhood
-    ) {
-      alert(
-        "Preencha nome, telefone, endereço (rua), número, bairro, como vai consumir e forma de pagamento."
-      );
+    if (!customer.name || !customer.phone || !customer.orderMode || !customer.payment) {
+      alert("Preencha nome, telefone, tipo de pedido e forma de pagamento.");
       return;
+    }
+    if (customer.orderMode === "delivery") {
+      if (!customer.street || !customer.number || !customer.neighborhood) {
+        alert("Para entrega, preencha rua, número e bairro completos.");
+        return;
+      }
     }
     let data;
     try {
@@ -219,6 +240,7 @@ if (checkoutForm) {
       window.open(String(store.paymentCardLink).trim(), "_blank", "noopener,noreferrer");
     }
 
+    const orderNumber = generateOrderNumber();
     openWhatsappOrder({
       whatsappDigits: store.whatsapp || "5511999999999",
       text: buildWhatsappText({
@@ -226,6 +248,7 @@ if (checkoutForm) {
         store,
         lines,
         customer,
+        orderNumber,
       }),
     });
     clearCart();

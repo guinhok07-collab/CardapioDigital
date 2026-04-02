@@ -1108,6 +1108,14 @@ body.page-home:not(.page-home--clean) {
   margin: 0 0 0.5rem;
 }
 
+.address-fields--delivery {
+  padding: 0.65rem 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(37, 99, 235, 0.35);
+  background: rgba(239, 246, 255, 0.65);
+}
+
 .checkout-row-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
