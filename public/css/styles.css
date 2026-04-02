@@ -61,7 +61,7 @@ body.page-home {
 }
 
 .home-top-inner {
-  max-width: 560px;
+  max-width: min(640px, 100%);
   margin: 0 auto;
   padding: 0.5rem 0.85rem 0.65rem;
   display: flex;
@@ -160,7 +160,7 @@ body.page-home {
 
 .home-hero-stage {
   position: relative;
-  min-height: min(88vh, 920px);
+  min-height: min(94vh, 1000px);
   overflow: hidden;
 }
 
@@ -191,10 +191,11 @@ body.page-home {
 .home-hero-panel {
   position: relative;
   z-index: 1;
-  max-width: 520px;
+  width: 100%;
+  max-width: min(640px, 96vw);
   margin: 0 auto;
-  padding: 1rem 0.85rem 3rem;
-  min-height: min(88vh, 920px);
+  padding: 0.5rem 0.65rem 2.5rem;
+  min-height: min(94vh, 1000px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -202,50 +203,59 @@ body.page-home {
 
 .home-hero-text {
   text-align: center;
-  padding: 0.5rem 0 0.75rem;
+  padding: 0.2rem 0 0.35rem;
+  flex: 0 0 auto;
 }
 
 .page-home .home-hero-text .store-name {
   color: #fff;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
-  font-size: 1.35rem;
+  font-size: 1.1rem;
 }
 
 .page-home .home-hero-text .headline {
   color: #fef3c7;
-  font-size: 0.98rem;
+  font-size: 0.85rem;
 }
 
 .page-home .home-hero-text .subhead {
-  color: rgba(255, 255, 255, 0.88);
-  font-size: 0.82rem;
-  margin-top: 0.25rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.72rem;
+  margin-top: 0.15rem;
+  line-height: 1.35;
 }
 
 .home-categories-wrap {
-  margin-top: auto;
-  padding: 0.65rem 0.6rem 0.75rem;
-  border-radius: 14px;
-  background: rgba(15, 15, 15, 0.78);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  flex: 1 1 auto;
+  margin-top: 0.35rem;
+  min-height: min(52vh, 520px);
+  padding: 0.75rem 0.65rem 0.9rem;
+  border-radius: 16px;
+  background: rgba(12, 12, 12, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
 }
 
 .home-cat-heading {
-  margin: 0 0 0.15rem;
-  font-size: 0.95rem;
+  margin: 0 0 0.1rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: #fef3c7;
+  color: #fde68a;
   text-align: center;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .home-cat-lead {
-  margin: 0 0 0.55rem;
-  font-size: 0.78rem;
-  color: #a8a29e;
+  margin: 0 0 0.45rem;
+  font-size: 0.65rem;
+  color: #9ca3af;
   text-align: center;
+  line-height: 1.35;
 }
 
 .page-home .top-bar-brand-link {
@@ -521,43 +531,52 @@ body.page-home {
   color: var(--accent);
 }
 
-/* Home — grelha compacta (2 colunas) + cards menores */
+/* Home — grelha compacta + texto bem pequeno; painel ocupa boa parte do ecrã */
 .category-grid--compact {
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.45rem;
+  gap: 0.4rem;
+  align-content: start;
 }
 
-@media (max-width: 380px) {
+@media (min-width: 420px) {
+  .category-grid--compact {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 360px) {
   .category-grid--compact {
     grid-template-columns: 1fr;
   }
 }
 
 .category-card--compact {
-  padding: 0.5rem 0.55rem;
-  gap: 0.45rem;
-  border-radius: 12px;
-  align-items: center;
+  padding: 0.38rem 0.42rem;
+  gap: 0.35rem;
+  border-radius: 10px;
+  align-items: flex-start;
   min-height: 0;
 }
 
 .category-card--compact .category-emoji {
-  font-size: 1.35rem;
-  width: 2rem;
+  font-size: 1.05rem;
+  width: 1.5rem;
+  line-height: 1.2;
   flex-shrink: 0;
 }
 
 .category-card--compact .category-title {
-  font-size: 0.86rem;
+  font-size: 0.72rem;
   line-height: 1.2;
   font-weight: 700;
 }
 
 .category-card--compact .category-sub {
-  font-size: 0.65rem;
-  margin-top: 0.1rem;
-  line-height: 1.25;
+  font-size: 0.58rem;
+  margin-top: 0.06rem;
+  line-height: 1.2;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -565,9 +584,11 @@ body.page-home {
 }
 
 .category-card--compact .category-cta {
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   font-weight: 400;
-  opacity: 0.65;
+  opacity: 0.5;
+  align-self: center;
+  margin-top: 0.1rem;
 }
 
 .cart-fab {
