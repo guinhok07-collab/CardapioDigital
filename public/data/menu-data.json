@@ -4,7 +4,12 @@
     "headline": "Cardápio completo — delivery",
     "subhead": "Escolha Hambúrgueres, Pastelaria, Pizza, Doces ou Bebidas. Todos os itens com descrição.",
     "whatsapp": "5511983928497",
-    "address": "Av. Domingos Batista de Lima, 598 — delivery (11) 98392-8497"
+    "address": "Av. Domingos Batista de Lima, 598 — delivery (11) 98392-8497",
+    "pixKey": "",
+    "pixHolderName": "",
+    "pixQrUrl": "",
+    "paymentCardLink": "",
+    "paymentNote": "Após pagar no PIX, envie o comprovante por este WhatsApp."
   },
   "categories": [
     {

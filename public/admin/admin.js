@@ -64,6 +64,11 @@
     $("f-address").value = s.address || "";
     $("f-logo-mode").value = s.logoMode === "image" ? "image" : "text";
     $("f-logo-image").value = s.logoImage || "";
+    $("f-pix-key").value = s.pixKey || "";
+    $("f-pix-holder").value = s.pixHolderName || "";
+    $("f-pix-qr").value = s.pixQrUrl || "";
+    $("f-card-link").value = s.paymentCardLink || "";
+    $("f-payment-note").value = s.paymentNote || "";
     toggleLogoFields();
   }
 
@@ -84,6 +89,16 @@
       logoMode: $("f-logo-mode").value === "image" ? "image" : "text",
       logoImage: $("f-logo-image").value.trim() || "",
     };
+    function opt(key, val) {
+      var v = String(val || "").trim();
+      if (v) menuData.store[key] = v;
+      else delete menuData.store[key];
+    }
+    opt("pixKey", $("f-pix-key").value);
+    opt("pixHolderName", $("f-pix-holder").value);
+    opt("pixQrUrl", $("f-pix-qr").value);
+    opt("paymentCardLink", $("f-card-link").value);
+    opt("paymentNote", $("f-payment-note").value);
   }
 
   function renderItem(ci, ii, item, si) {
@@ -509,7 +524,19 @@
         showPanel();
         if (!storeBound) {
           storeBound = true;
-          ["f-name", "f-wa", "f-headline", "f-subhead", "f-address", "f-logo-image"].forEach(function (id) {
+          [
+            "f-name",
+            "f-wa",
+            "f-headline",
+            "f-subhead",
+            "f-address",
+            "f-logo-image",
+            "f-pix-key",
+            "f-pix-holder",
+            "f-pix-qr",
+            "f-card-link",
+            "f-payment-note",
+          ].forEach(function (id) {
             var el = $(id);
             if (el) el.addEventListener("input", readStoreForm);
           });

@@ -16,6 +16,102 @@ function escapeHtml(s) {
   return d.innerHTML;
 }
 
+/** Dados da loja para PIX / link de cartão (definidos em menu-data.json). */
+let storeCache = {};
+
+function applyPaymentHints(store) {
+  storeCache = store || {};
+  const section = document.getElementById("payment-hints");
+  const pixBlock = document.getElementById("pix-hint-block");
+  const cardBlock = document.getElementById("card-hint-block");
+  const pixKeyEl = document.getElementById("pix-key-display");
+  const pixHolder = document.getElementById("pix-holder-line");
+  const pixQr = document.getElementById("pix-qr-img");
+  const cardLink = document.getElementById("card-pay-link");
+  const noteEl = document.getElementById("payment-note-hint");
+  const labelCardOnline = document.getElementById("pay-label-card-online");
+
+  const pixKey = (store.pixKey || "").trim();
+  const pixName = (store.pixHolderName || "").trim();
+  const pixQrUrl = (store.pixQrUrl || "").trim();
+  const cardUrl = (store.paymentCardLink || "").trim();
+  const note = (store.paymentNote || "").trim();
+
+  const showPix = !!pixKey;
+  const showCard = !!cardUrl;
+
+  if (!showPix && !showCard && !note) {
+    section.classList.add("hidden");
+  } else {
+    section.classList.remove("hidden");
+  }
+
+  if (showPix) {
+    pixBlock.classList.remove("hidden");
+    pixKeyEl.textContent = pixKey;
+    if (pixName) {
+      pixHolder.textContent = "Titular: " + pixName;
+      pixHolder.classList.remove("hidden");
+    } else {
+      pixHolder.textContent = "";
+      pixHolder.classList.add("hidden");
+    }
+    if (pixQrUrl) {
+      pixQr.src = pixQrUrl;
+      pixQr.classList.remove("hidden");
+    } else {
+      pixQr.removeAttribute("src");
+      pixQr.classList.add("hidden");
+    }
+  } else {
+    pixBlock.classList.add("hidden");
+  }
+
+  if (showCard) {
+    cardBlock.classList.remove("hidden");
+    cardLink.href = cardUrl;
+  } else {
+    cardBlock.classList.add("hidden");
+    cardLink.removeAttribute("href");
+  }
+
+  if (note) {
+    noteEl.textContent = note;
+    noteEl.classList.remove("hidden");
+  } else {
+    noteEl.textContent = "";
+    noteEl.classList.add("hidden");
+  }
+
+  if (labelCardOnline) {
+    if (showCard) labelCardOnline.classList.remove("hidden");
+    else labelCardOnline.classList.add("hidden");
+  }
+}
+
+function setupPixCopy() {
+  const btn = document.getElementById("btn-copy-pix");
+  const feedback = document.getElementById("pix-copy-feedback");
+  if (!btn) return;
+  btn.addEventListener("click", async () => {
+    const key = (storeCache.pixKey || "").trim();
+    if (!key) return;
+    try {
+      await navigator.clipboard.writeText(key);
+      if (feedback) {
+        feedback.textContent = "Chave copiada.";
+        feedback.classList.remove("hidden");
+        setTimeout(() => feedback.classList.add("hidden"), 2500);
+      }
+    } catch {
+      if (feedback) {
+        feedback.textContent = "Copie manualmente a chave acima.";
+        feedback.classList.remove("hidden");
+      }
+    }
+  });
+}
+
 function render() {
   const lines = getLines();
   const emptyEl = document.getElementById("empty-cart");
@@ -91,7 +187,7 @@ document.getElementById("checkout-form").addEventListener("submit", async (e) =>
     notes: String(fd.get("notes") || "").trim(),
   };
   if (!customer.name || !customer.phone || !customer.address || !customer.payment) {
-    alert("Preencha nome, telefone, endereço e pagamento.");
+    alert("Preencha nome, telefone, endereço e forma de pagamento.");
     return;
   }
   let data;
@@ -102,6 +198,11 @@ document.getElementById("checkout-form").addEventListener("submit", async (e) =>
     return;
   }
   const store = data.store || {};
+
+  if (customer.payment === "Cartão online" && (store.paymentCardLink || "").trim()) {
+    window.open(String(store.paymentCardLink).trim(), "_blank", "noopener,noreferrer");
+  }
+
   openWhatsappOrder({
     whatsappDigits: store.whatsapp || "5511999999999",
     text: buildWhatsappText({
@@ -115,5 +216,14 @@ document.getElementById("checkout-form").addEventListener("submit", async (e) =>
   render();
 });
 
-render();
+loadMenuData()
+  .then((data) => {
+    applyPaymentHints(data.store || {});
+    setupPixCopy();
+    render();
+  })
+  .catch(() => {
+    render();
+  });
+
 window.addEventListener("cardapio-cart-updated", render);

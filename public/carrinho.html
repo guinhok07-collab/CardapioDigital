@@ -27,6 +27,27 @@
 
     <div id="cart-content" class="hidden">
       <div id="cart-lines"></div>
+
+      <section id="payment-hints" class="payment-hints hidden" aria-label="Dados para pagamento">
+        <h3 class="payment-hints-title">Pagamento antecipado</h3>
+        <div id="pix-hint-block" class="payment-pix hidden">
+          <p class="payment-pix-label">PIX</p>
+          <p id="pix-holder-line" class="payment-pix-holder muted hidden"></p>
+          <div class="pix-key-row">
+            <code id="pix-key-display" class="pix-key-code"></code>
+            <button type="button" class="btn-copy-pix" id="btn-copy-pix">Copiar chave</button>
+          </div>
+          <p id="pix-copy-feedback" class="pix-copy-feedback hidden" role="status"></p>
+          <img id="pix-qr-img" class="pix-qr-img hidden" alt="QR Code para PIX" width="200" height="200" loading="lazy" decoding="async" />
+        </div>
+        <div id="card-hint-block" class="payment-card-hint hidden">
+          <p class="payment-card-label">Cartão (online)</p>
+          <a id="card-pay-link" class="btn-payment-link" href="#" target="_blank" rel="noopener noreferrer">Abrir pagamento com cartão</a>
+          <p class="muted small">Página segura do Mercado Pago, Stripe ou outro link que configurares.</p>
+        </div>
+        <p id="payment-note-hint" class="payment-note-hint muted small hidden"></p>
+      </section>
+
       <section class="checkout-card">
         <h2>Finalizar pedido</h2>
         <form id="checkout-form">
@@ -34,8 +55,9 @@
           <label>WhatsApp *<input type="tel" name="phone" required autocomplete="tel" /></label>
           <label>Endereço *<textarea name="address" required rows="3"></textarea></label>
           <fieldset class="pay-fieldset">
-            <legend>Pagamento *</legend>
-            <label><input type="radio" name="payment" value="PIX" required /> PIX</label>
+            <legend>Forma de pagamento *</legend>
+            <label id="pay-label-pix"><input type="radio" name="payment" value="PIX" required /> PIX (transferência)</label>
+            <label id="pay-label-card-online" class="hidden"><input type="radio" name="payment" value="Cartão online" /> Cartão online (link)</label>
             <label><input type="radio" name="payment" value="Cartão na entrega" /> Cartão na entrega</label>
             <label><input type="radio" name="payment" value="Dinheiro" /> Dinheiro</label>
           </fieldset>

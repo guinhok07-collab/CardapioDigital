@@ -96,7 +96,16 @@ export function buildWhatsappText({ name, store, lines, customer }) {
   t += `*Cliente:* ${customer.name || "-"}\n`;
   t += `*Telefone:* ${customer.phone || "-"}\n`;
   t += `*Endereço:* ${customer.address || "-"}\n`;
-  t += `*Pagamento:* ${customer.payment || "-"}\n\n`;
+  t += `*Pagamento:* ${customer.payment || "-"}\n`;
+  const pay = customer.payment || "";
+  if (pay === "PIX" && (store.pixKey || "").trim()) {
+    t += `*Chave PIX:* ${String(store.pixKey).trim()}\n`;
+    t += `_Envie o comprovante deste chat após pagar._\n`;
+  }
+  if (pay === "Cartão online") {
+    t += `_Cliente deve usar o link de cartão; confirme o recebimento._\n`;
+  }
+  t += `\n`;
   t += `*Itens:*\n${waLines || "(nenhum)"}\n\n`;
   t += `*Total:* ${formatMoney(total)}\n`;
   const notes = (customer.notes || "").trim();
