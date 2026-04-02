@@ -4,8 +4,8 @@
    * Aviso: isto é só verificação no browser; o ficheiro fica no site — não use a mesma senha de outros serviços.
    * Para e-mail, a comparação ignora maiúsculas/minúsculas.
    */
-  var ADMIN_LOGIN = "seu@email.com";
-  var ADMIN_PASSWORD = "suaSenhaAqui";
+  var ADMIN_LOGIN = "pasteldoroger12@gmail.com";
+  var ADMIN_PASSWORD = "Vencer132018";
 
   function normalizeLogin(s) {
     s = String(s || "").trim();
