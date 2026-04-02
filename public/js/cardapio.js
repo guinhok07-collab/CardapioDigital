@@ -1,7 +1,7 @@
 import { loadMenuData } from "./data-loader.js";
 import { addItem } from "./cart.js";
 import { initCartBadge } from "./cart-badge.js";
-import { THEME_BG } from "./theme-assets.js";
+import { DEFAULT_HOME_HERO } from "./theme-assets.js";
 
 function formatMoney(n) {
   return Number(n).toLocaleString("pt-BR", {
@@ -34,31 +34,16 @@ function applyCategoryTheme(_theme) {
   body.classList.add("cardapio-theme-clean");
 }
 
-function clearCategoryBackground() {
-  document.body.style.removeProperty("--cardapio-bg-photo");
+/** Mesma foto da home (`homeHeroImage` ou padrão), em toda página de itens. */
+function applyStoreHeroBackground(store) {
+  const url =
+    (store && store.homeHeroImage && String(store.homeHeroImage).trim()) ||
+    DEFAULT_HOME_HERO;
+  document.body.style.setProperty("--cardapio-bg-photo", `url(${JSON.stringify(url)})`);
   const strip = document.getElementById("cardapio-hero-strip");
   if (strip) {
-    strip.style.backgroundImage = "";
-    strip.classList.add("is-hidden");
-  }
-}
-
-/** Fundo + faixa no topo: `backgroundUrl` no JSON ou fotos “cardápio gourmet” por `theme`. */
-function applyCategoryBackground(cat) {
-  let url = (cat && cat.backgroundUrl && String(cat.backgroundUrl).trim()) || "";
-  if (!url && cat && cat.theme) {
-    const fb = THEME_BG[String(cat.theme)];
-    if (fb) url = fb;
-  }
-  if (url) {
-    document.body.style.setProperty("--cardapio-bg-photo", `url(${JSON.stringify(url)})`);
-    const strip = document.getElementById("cardapio-hero-strip");
-    if (strip) {
-      strip.style.backgroundImage = `url(${JSON.stringify(url)})`;
-      strip.classList.remove("is-hidden");
-    }
-  } else {
-    clearCategoryBackground();
+    strip.style.backgroundImage = `url(${JSON.stringify(url)})`;
+    strip.classList.remove("is-hidden");
   }
 }
 
@@ -189,9 +174,9 @@ function buildItemCard(item, catId, catTitle, sectionTitle, categoryTheme) {
   return art;
 }
 
-function renderCategoryPicker(root, categories, storeName) {
+function renderCategoryPicker(root, categories, storeName, store) {
   applyCategoryTheme("default");
-  clearCategoryBackground();
+  applyStoreHeroBackground(store || {});
   document.title = `Cardápio — ${storeName || "Point do Roger"}`;
   const titleEl = document.getElementById("cat-title");
   if (titleEl) titleEl.textContent = "Escolha uma categoria";
@@ -235,20 +220,20 @@ async function renderCardapio() {
     const categories = data.categories || [];
 
     if (!catId) {
-      renderCategoryPicker(root, categories, store.name);
+      renderCategoryPicker(root, categories, store.name, store);
       return;
     }
 
     const cat = categories.find((c) => c.id === catId);
     if (!cat) {
       applyCategoryTheme("default");
-      clearCategoryBackground();
+      applyStoreHeroBackground(store);
       root.className = "items-list";
       root.innerHTML = `<p class="error-msg">Categoria não encontrada.</p>`;
       return;
     }
     applyCategoryTheme(cat.theme);
-    applyCategoryBackground(cat);
+    applyStoreHeroBackground(store);
     document.title = `${cat.title} — ${store.name || "Point do Roger"}`;
     const titleNode = document.getElementById("cat-title");
     if (titleNode) titleNode.textContent = cat.title;
@@ -296,7 +281,7 @@ async function renderCardapio() {
     }
   } catch (e) {
     applyCategoryTheme("default");
-    clearCategoryBackground();
+    applyStoreHeroBackground({});
     root.className = "items-list";
     root.innerHTML = `<p class="error-msg">Erro ao carregar itens.</p>`;
     console.error(e);

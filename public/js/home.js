@@ -1,10 +1,6 @@
 import { loadMenuData } from "./data-loader.js";
 import { initCartBadge } from "./cart-badge.js";
-import {
-  DEFAULT_HOME_HERO,
-  homeHeroOverlayGradient,
-  THEME_TOP_STRIP,
-} from "./theme-assets.js";
+import { DEFAULT_HOME_HERO, homeHeroOverlayGradient } from "./theme-assets.js";
 
 function escapeHtml(s) {
   const d = document.createElement("div");
@@ -80,6 +76,9 @@ function renderHome(data) {
     }
   }
 
+  const heroStripUrl =
+    (store.homeHeroImage || "").trim() || DEFAULT_HOME_HERO;
+
   const categories = data.categories || [];
   const grid = document.getElementById("category-grid");
   grid.innerHTML = "";
@@ -89,7 +88,7 @@ function renderHome(data) {
     a.href = `cardapio.html#cat=${encodeURIComponent(cat.id)}`;
     const theme = String(cat.theme || "default");
     a.dataset.theme = theme;
-    const topUrl = THEME_TOP_STRIP[theme] || THEME_TOP_STRIP.default;
+    const topUrl = heroStripUrl;
     const sub = (cat.subtitle || "").trim();
     a.innerHTML = `
       <div class="home-cat-top" style="background-image:url(${JSON.stringify(topUrl)})" aria-hidden="true"></div>
