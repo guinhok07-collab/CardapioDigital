@@ -171,50 +171,67 @@ function render() {
   totalEl.textContent = formatMoney(getSubtotal());
 }
 
-document.getElementById("checkout-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const lines = getLines();
-  if (lines.length === 0) {
-    alert("Adicione itens ao carrinho.");
-    return;
-  }
-  const fd = new FormData(e.target);
-  const customer = {
-    name: String(fd.get("name") || "").trim(),
-    phone: String(fd.get("phone") || "").trim(),
-    address: String(fd.get("address") || "").trim(),
-    payment: String(fd.get("payment") || "").trim(),
-    notes: String(fd.get("notes") || "").trim(),
-  };
-  if (!customer.name || !customer.phone || !customer.address || !customer.payment) {
-    alert("Preencha nome, telefone, endereço e forma de pagamento.");
-    return;
-  }
-  let data;
-  try {
-    data = await loadMenuData();
-  } catch {
-    alert("Erro ao carregar dados da loja.");
-    return;
-  }
-  const store = data.store || {};
+const checkoutForm = document.getElementById("checkout-form");
+if (checkoutForm) {
+  checkoutForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const lines = getLines();
+    if (lines.length === 0) {
+      alert("Adicione itens ao carrinho.");
+      return;
+    }
+    const fd = new FormData(e.target);
+    const orderMode = String(fd.get("orderMode") || "").trim();
+    const customer = {
+      name: String(fd.get("name") || "").trim(),
+      phone: String(fd.get("phone") || "").trim(),
+      orderMode,
+      street: String(fd.get("street") || "").trim(),
+      number: String(fd.get("number") || "").trim(),
+      neighborhood: String(fd.get("neighborhood") || "").trim(),
+      payment: String(fd.get("payment") || "").trim(),
+      notes: String(fd.get("notes") || "").trim(),
+    };
+    if (
+      !customer.name ||
+      !customer.phone ||
+      !customer.orderMode ||
+      !customer.payment ||
+      !customer.street ||
+      !customer.number ||
+      !customer.neighborhood
+    ) {
+      alert(
+        "Preencha nome, telefone, endereço (rua), número, bairro, como vai consumir e forma de pagamento."
+      );
+      return;
+    }
+    let data;
+    try {
+      data = await loadMenuData();
+    } catch {
+      alert("Erro ao carregar dados da loja.");
+      return;
+    }
+    const store = data.store || {};
 
-  if (customer.payment === "Cartão online" && (store.paymentCardLink || "").trim()) {
-    window.open(String(store.paymentCardLink).trim(), "_blank", "noopener,noreferrer");
-  }
+    if (customer.payment === "Cartão online" && (store.paymentCardLink || "").trim()) {
+      window.open(String(store.paymentCardLink).trim(), "_blank", "noopener,noreferrer");
+    }
 
-  openWhatsappOrder({
-    whatsappDigits: store.whatsapp || "5511999999999",
-    text: buildWhatsappText({
-      name: store.name || "Point do Roger",
-      store,
-      lines,
-      customer,
-    }),
+    openWhatsappOrder({
+      whatsappDigits: store.whatsapp || "5511999999999",
+      text: buildWhatsappText({
+        name: store.name || "Point do Roger",
+        store,
+        lines,
+        customer,
+      }),
+    });
+    clearCart();
+    render();
   });
-  clearCart();
-  render();
-});
+}
 
 loadMenuData()
   .then((data) => {

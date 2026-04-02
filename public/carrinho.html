@@ -54,9 +54,23 @@
       <section class="checkout-card">
         <h2>Finalizar pedido</h2>
         <form id="checkout-form">
-          <label>Nome *<input type="text" name="name" required autocomplete="name" /></label>
-          <label>WhatsApp *<input type="tel" name="phone" required autocomplete="tel" /></label>
-          <label>Endereço *<textarea name="address" required rows="3"></textarea></label>
+          <label>Nome completo *<input type="text" name="name" required autocomplete="name" /></label>
+          <label>Telefone (WhatsApp) *<input type="tel" name="phone" required autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999" /></label>
+
+          <fieldset class="order-mode-fieldset pay-fieldset">
+            <legend>Comer agora ou para levar? *</legend>
+            <label><input type="radio" name="orderMode" value="local" required /> Comer agora (no local)</label>
+            <label><input type="radio" name="orderMode" value="takeaway" /> Para levar</label>
+          </fieldset>
+
+          <div class="address-fields">
+            <label>Endereço (rua, avenida…) *<input type="text" name="street" required autocomplete="street-address" /></label>
+            <div class="checkout-row-2">
+              <label>Número *<input type="text" name="number" required inputmode="text" autocomplete="address-line2" /></label>
+              <label>Bairro *<input type="text" name="neighborhood" required /></label>
+            </div>
+          </div>
+
           <fieldset class="pay-fieldset">
             <legend>Forma de pagamento *</legend>
             <label id="pay-label-pix"><input type="radio" name="payment" value="PIX" required /> PIX (transferência)</label>

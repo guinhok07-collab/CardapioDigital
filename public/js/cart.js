@@ -80,6 +80,12 @@ export function formatMoney(n) {
   });
 }
 
+function formatOrderMode(mode) {
+  if (mode === "local") return "Comer agora (no local)";
+  if (mode === "takeaway") return "Para levar";
+  return String(mode || "-");
+}
+
 export function buildWhatsappText({ name, store, lines, customer }) {
   const storeName = name || "Point do Roger";
   const waLines = (lines || [])
@@ -93,9 +99,12 @@ export function buildWhatsappText({ name, store, lines, customer }) {
     0
   );
   let t = `*Pedido — ${storeName}*\n\n`;
-  t += `*Cliente:* ${customer.name || "-"}\n`;
+  t += `*Nome:* ${customer.name || "-"}\n`;
   t += `*Telefone:* ${customer.phone || "-"}\n`;
-  t += `*Endereço:* ${customer.address || "-"}\n`;
+  t += `*Consumo:* ${formatOrderMode(customer.orderMode)}\n`;
+  t += `*Rua:* ${(customer.street || "").trim() || "-"}\n`;
+  t += `*Número:* ${(customer.number || "").trim() || "-"}\n`;
+  t += `*Bairro:* ${(customer.neighborhood || "").trim() || "-"}\n`;
   t += `*Pagamento:* ${customer.payment || "-"}\n`;
   const pay = customer.payment || "";
   if (pay === "PIX" && (store.pixKey || "").trim()) {

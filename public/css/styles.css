@@ -1100,6 +1100,26 @@ body.page-home:not(.page-home--clean) {
   margin-bottom: 0.35rem;
 }
 
+.order-mode-fieldset legend {
+  font-weight: 600;
+}
+
+.checkout-hint {
+  margin: 0 0 0.5rem;
+}
+
+.checkout-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 0.75rem;
+}
+
+@media (max-width: 420px) {
+  .checkout-row-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
 .total-row {
   font-size: 1.1rem;
   margin: 1rem 0 0.5rem;
