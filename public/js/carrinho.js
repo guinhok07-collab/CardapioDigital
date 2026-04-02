@@ -228,14 +228,9 @@ if (checkoutForm) {
         return;
       }
     }
-    let data;
-    try {
-      data = await loadMenuData();
-    } catch {
-      alert("Erro ao carregar dados da loja.");
-      return;
-    }
-    const store = data.store || {};
+    // Importante: não usar `await` aqui para não perder o "user gesture"
+    // e evitar bloqueio de pop-up do WhatsApp em alguns navegadores.
+    const store = storeCache || {};
 
     if (customer.payment === "Cartão online" && (store.paymentCardLink || "").trim()) {
       window.open(String(store.paymentCardLink).trim(), "_blank", "noopener,noreferrer");

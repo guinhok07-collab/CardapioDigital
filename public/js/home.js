@@ -156,7 +156,7 @@ async function init() {
   try {
     const data = await loadMenuData();
     renderHome(data);
-    setupWelcomeModal(data.store || {});
+    // Welcome modal (robô gigante) desativado: manter apenas o Rogerbot flutuante.
   } catch (e) {
     document.getElementById("category-grid").innerHTML =
       `<p class="error-msg">Erro ao carregar o cardápio.</p>`;

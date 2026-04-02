@@ -58,18 +58,6 @@ export function mountRogerbotWidget() {
           <p class="rogerbot-bubble rogerbot-bubble--bot">Olá! Ótima escolha. 😊 Eu sou o Roger, seu assistente virtual. Como posso te ajudar?</p>
         </div>
         <div class="rogerbot-widget-chips" data-rogerbot-chips></div>
-        <form class="rogerbot-widget-input-row" id="rogerbot-input-form">
-          <input
-            id="rogerbot-input"
-            class="rogerbot-widget-input"
-            type="text"
-            inputmode="text"
-            autocomplete="off"
-            placeholder="Digite sua dúvida…"
-            aria-label="Digite sua dúvida"
-          />
-          <button class="rogerbot-widget-send" type="submit" aria-label="Enviar mensagem">➤</button>
-        </form>
       </div>
     </div>
     <button type="button" class="rogerbot-widget-launch" aria-expanded="false" aria-controls="rogerbot-panel" aria-label="Abrir Rogerbot — ajuda com o cardápio" title="Rogerbot — ajuda com o cardápio">
@@ -83,8 +71,6 @@ export function mountRogerbotWidget() {
   const backdrop = wrap.querySelector("[data-rogerbot-backdrop]");
   const launch = wrap.querySelector(".rogerbot-widget-launch");
   const chips = wrap.querySelector("[data-rogerbot-chips]");
-  const inputForm = wrap.querySelector("#rogerbot-input-form");
-  const input = wrap.querySelector("#rogerbot-input");
 
   let waDigits = WA_FALLBACK;
   let address = "";
@@ -148,36 +134,6 @@ export function mountRogerbotWidget() {
       });
     });
   }
-
-  function botAnswerByText(text) {
-    const q = String(text || "").toLowerCase();
-    const addr = address.trim() || "O endereço aparece no rodapé da página inicial assim que o cardápio carregar.";
-
-    if (q.includes("endereço") || q.includes("endereco") || q.includes("onde") || q.includes("local") || q.includes("rua")) {
-      return addr;
-    }
-
-    if (q.includes("pedido") || q.includes("carrinho") || q.includes("comprar") || q.includes("enviar") || q.includes("whatsapp")) {
-      return "Escolhe os itens, adiciona ao carrinho, preenche seus dados no carrinho e envia o pedido pelo WhatsApp. Se quiser, toque em “Ver carrinho” agora.";
-    }
-
-    if (q.includes("cardapio") || q.includes("cardápio") || q.includes("menu") || q.includes("categoria") || q.includes("tem") || q.includes("o que")) {
-      return "Na página inicial você encontra: Burgers, Pastelaria, Pizza, Doces e Bebidas. Toque em uma categoria para ver os itens e preços.";
-    }
-
-    return "Entendi! Para resolver mais rápido, toque em “Falar no WhatsApp” e chama a equipe com seu pedido.";
-  }
-
-  inputForm?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const val = String(input?.value || "").trim();
-    if (!val) return;
-    if (input) input.value = "";
-
-    // Resposta bot + bolhas
-    const botText = botAnswerByText(val);
-    appendExchange(wrap, val, botText);
-  });
 
   loadMenuData()
     .then((data) => {

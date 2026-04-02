@@ -2802,6 +2802,15 @@ body.welcome-modal-open {
   --rogerbot-ink: #831843;
   --rogerbot-shadow-bar: rgba(157, 23, 77, 0.35);
   --rogerbot-shadow-head: rgba(190, 24, 93, 0.25);
+  --rogerbot-panel-bg-1: rgba(15, 23, 42, 0.92);
+  --rogerbot-panel-bg-2: rgba(2, 6, 23, 0.86);
+  --rogerbot-panel-border: rgba(148, 163, 184, 0.22);
+  --rogerbot-bubble-bot-bg: rgba(15, 23, 42, 0.7);
+  --rogerbot-bubble-user-bg: rgba(2, 6, 23, 0.55);
+  --rogerbot-bubble-border: rgba(148, 163, 184, 0.25);
+  --rogerbot-chip-bg: rgba(15, 23, 42, 0.78);
+  --rogerbot-chip-border: rgba(148, 163, 184, 0.25);
+  --rogerbot-chip-text: var(--rogerbot-accent);
 }
 
 .rogerbot-widget-launch {
@@ -2869,10 +2878,15 @@ body.welcome-modal-open {
   flex-direction: column;
   max-height: inherit;
   border-radius: 18px;
-  background: linear-gradient(165deg, #fff7fb 0%, #fce7f3 40%, #fbcfe8 100%);
-  border: 2px solid rgba(244, 114, 182, 0.55);
+  background: linear-gradient(
+    165deg,
+    var(--rogerbot-panel-bg-1) 0%,
+    var(--rogerbot-panel-bg-2) 40%,
+    var(--rogerbot-panel-bg-2) 100%
+  );
+  border: 2px solid var(--rogerbot-panel-border);
   box-shadow:
-    0 20px 50px rgba(157, 23, 77, 0.22),
+    0 20px 50px var(--rogerbot-shadow-head),
     0 0 0 1px rgba(255, 255, 255, 0.5) inset;
   overflow: hidden;
 }
@@ -2918,13 +2932,13 @@ body.welcome-modal-open {
   margin: 0;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #9d174d;
+  color: var(--rogerbot-accent);
 }
 
 .rogerbot-widget-sub {
   margin: 0.1rem 0 0;
   font-size: 0.75rem;
-  color: rgba(131, 24, 67, 0.75);
+  color: rgba(226, 232, 240, 0.78);
 }
 
 .rogerbot-widget-close {
@@ -2933,8 +2947,8 @@ body.welcome-modal-open {
   height: 40px;
   border: none;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.85);
-  color: #9d174d;
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--rogerbot-accent);
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
@@ -2958,16 +2972,16 @@ body.welcome-modal-open {
 }
 
 .rogerbot-bubble--bot {
-  background: rgba(255, 255, 255, 0.85);
-  color: #831843;
-  border: 1px solid rgba(244, 114, 182, 0.35);
+  background: var(--rogerbot-bubble-bot-bg);
+  color: #e2e8f0;
+  border: 1px solid var(--rogerbot-bubble-border);
 }
 
 .rogerbot-bubble--user {
   margin-left: 1.5rem;
-  background: linear-gradient(180deg, #fbcfe8 0%, #f9a8d4 100%);
-  color: #831843;
-  border: 1px solid rgba(190, 24, 93, 0.25);
+  background: var(--rogerbot-bubble-user-bg);
+  color: #e2e8f0;
+  border: 1px solid var(--rogerbot-bubble-border);
   text-align: right;
 }
 
@@ -2976,7 +2990,7 @@ body.welcome-modal-open {
   flex-wrap: wrap;
   gap: 0.45rem;
   padding: 0.65rem 0.85rem 0.85rem;
-  border-top: 1px solid rgba(190, 24, 93, 0.1);
+  border-top: 1px solid var(--rogerbot-panel-border);
   flex-shrink: 0;
 }
 
@@ -3029,9 +3043,9 @@ body.welcome-modal-open {
   gap: 0.25rem;
   padding: 0.45rem 0.65rem;
   border-radius: 999px;
-  border: 1px solid rgba(190, 24, 93, 0.35);
-  background: rgba(255, 255, 255, 0.92);
-  color: #9d174d !important;
+  border: 1px solid var(--rogerbot-chip-border);
+  background: var(--rogerbot-chip-bg);
+  color: var(--rogerbot-chip-text) !important;
   font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
@@ -3040,7 +3054,7 @@ body.welcome-modal-open {
 }
 
 .rogerbot-chip:hover {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .rogerbot-chip--wa {
@@ -3109,6 +3123,18 @@ body.rogerbot-open {
   --rogerbot-ink: #0f172a;
   --rogerbot-shadow-bar: rgba(100, 116, 139, 0.35);
   --rogerbot-shadow-head: rgba(100, 116, 139, 0.25);
+}
+
+/* Mantém o Rogerbot com cara do layout (escuro) também em Home e Carrinho */
+.page-home .rogerbot-widget,
+.page-carrinho .rogerbot-widget {
+  --rogerbot-accent: #ea580c;
+  --rogerbot-accent-2: #fdba74;
+  --rogerbot-ink: #1c1917;
+  --rogerbot-panel-bg-1: rgba(15, 23, 42, 0.92);
+  --rogerbot-panel-bg-2: rgba(2, 6, 23, 0.86);
+  --rogerbot-panel-border: rgba(148, 163, 184, 0.22);
+  --rogerbot-chip-bg: rgba(15, 23, 42, 0.78);
 }
 
 /* ========== Cardápio (itens) — mesmo fundo da home (foto + overlay escuro) ========== */
