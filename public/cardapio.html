@@ -4,36 +4,37 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cardápio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body class="page-cardapio">
-  <div class="cardapio-top-sheen" aria-hidden="true"></div>
-  <header class="bar-top">
-    <nav class="top-menu top-menu--subpage" aria-label="Menu principal">
-      <a href="index.html">Início</a>
-      <a href="index.html#cardapio">Categorias</a>
-      <a href="carrinho.html">Carrinho</a>
-    </nav>
-    <div class="bar-row-actions">
-      <a class="back-link" href="index.html">← Voltar</a>
-      <a class="cart-link" href="carrinho.html">🛒 <span id="cart-badge" class="cart-badge is-empty">0</span></a>
+<body class="page-cardapio page-cardapio--clean">
+  <header class="cardapio-bar">
+    <div class="cardapio-bar-inner">
+      <a class="cardapio-bar-back" href="index.html">← Voltar</a>
+      <a class="cardapio-bar-cart" href="carrinho.html">
+        <span aria-hidden="true">🛒</span>
+        <span>Carrinho</span>
+        <span class="cart-badge is-empty" id="cart-badge">0</span>
+      </a>
     </div>
-    <div class="bar-title">
-      <span id="cat-emoji" class="cat-emoji"></span>
-      <h1 id="cat-title" class="cat-title">Categoria</h1>
+    <div class="cardapio-bar-head">
+      <span id="cat-emoji" class="cardapio-cat-emoji" aria-hidden="true"></span>
+      <h1 id="cat-title" class="cardapio-cat-title">Categoria</h1>
     </div>
-    <p id="cat-subtitle" class="cat-subtitle" hidden></p>
+    <p id="cat-subtitle" class="cardapio-cat-subtitle" hidden></p>
   </header>
-
-  <a class="cart-fab" href="carrinho.html" data-cart-fab hidden>
-    🛒 Carrinho <strong data-cart-fab-count>0</strong>
-  </a>
 
   <main class="main narrow cardapio-main">
     <div id="items-root" class="items-list"></div>
   </main>
 
-  <footer class="site-footer">
+  <a class="home-fab" href="carrinho.html" data-cart-fab hidden>
+    <span aria-hidden="true">🛒</span> Carrinho <span class="home-fab-count" data-cart-fab-count>0</span>
+  </a>
+
+  <footer class="site-footer cardapio-site-footer">
     <p class="footnote">Cardápio Digital</p>
   </footer>
 

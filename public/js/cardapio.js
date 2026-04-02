@@ -20,27 +20,44 @@ function getCatIdFromLocation() {
   return "";
 }
 
-function applyCategoryTheme(theme) {
+function applyCategoryTheme(_theme) {
   const body = document.body;
   body.classList.remove(
     "cardapio-theme-burger",
     "cardapio-theme-pastel",
     "cardapio-theme-pizza",
     "cardapio-theme-sweet",
-    "cardapio-theme-default"
+    "cardapio-theme-default",
+    "cardapio-theme-clean"
   );
-  const allowed = ["burger", "pastel", "pizza", "sweet", "default"];
-  const t = allowed.includes(theme) ? theme : "default";
-  body.classList.add("cardapio-theme-" + t);
+  body.classList.add("cardapio-theme-clean");
 }
 
 function clearCategoryBackground() {
   document.body.style.removeProperty("--cardapio-bg-photo");
 }
 
-/** Fundo opcional por categoria (`backgroundUrl` no JSON). */
+/** Quando não há `backgroundUrl` no JSON, usa a mesma ideia dos temas antigos (foto suave). */
+const THEME_BG_FALLBACK = {
+  burger:
+    "https://images.unsplash.com/photo-1568901346375-23c945677c61?auto=format&fit=crop&w=1920&q=80",
+  pastel:
+    "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=1920&q=80",
+  pizza:
+    "https://images.unsplash.com/photo-1513104890138-7c7496599c91?auto=format&fit=crop&w=1920&q=80",
+  sweet:
+    "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1920&q=80",
+  default:
+    "https://images.unsplash.com/photo-1544145945-f0a224ac7a5e?auto=format&fit=crop&w=1920&q=80",
+};
+
+/** Fundo por categoria: `backgroundUrl` no JSON ou fallback por `theme`. */
 function applyCategoryBackground(cat) {
-  const url = (cat && cat.backgroundUrl && String(cat.backgroundUrl).trim()) || "";
+  let url = (cat && cat.backgroundUrl && String(cat.backgroundUrl).trim()) || "";
+  if (!url && cat && cat.theme) {
+    const fb = THEME_BG_FALLBACK[String(cat.theme)];
+    if (fb) url = fb;
+  }
   if (url) {
     document.body.style.setProperty("--cardapio-bg-photo", `url(${JSON.stringify(url)})`);
   } else {
