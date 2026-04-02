@@ -29,10 +29,12 @@ function applyCategoryTheme(_theme) {
     "cardapio-theme-pastel",
     "cardapio-theme-pizza",
     "cardapio-theme-sweet",
-    "cardapio-theme-default",
-    "cardapio-theme-clean"
+    "cardapio-theme-default"
   );
-  body.classList.add("cardapio-theme-clean");
+  const t = String(_theme || "default").trim().toLowerCase();
+  const allowed = new Set(["burger", "pastel", "pizza", "sweet", "default"]);
+  const key = allowed.has(t) ? t : "default";
+  body.classList.add(`cardapio-theme-${key}`);
 }
 
 /** Mesma foto da home (`homeHeroImage` ou padrão), em toda página de itens. */

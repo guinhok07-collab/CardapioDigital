@@ -2573,7 +2573,7 @@ body.welcome-modal-open {
   width: 4px;
   height: 18px;
   margin-left: -2px;
-  background: linear-gradient(180deg, #f472b6, #db2777);
+  background: linear-gradient(180deg, var(--rogerbot-accent-2), var(--rogerbot-accent));
   border-radius: 4px;
   animation: roger-antenna 2s ease-in-out infinite;
 }
@@ -2586,8 +2586,8 @@ body.welcome-modal-open {
   width: 12px;
   height: 12px;
   margin-left: -6px;
-  background: #f9a8d4;
-  border: 2px solid #db2777;
+  background: var(--rogerbot-accent-2);
+  border: 2px solid var(--rogerbot-accent-2);
   border-radius: 50%;
 }
 
@@ -2608,10 +2608,16 @@ body.welcome-modal-open {
   width: 84px;
   height: 72px;
   margin-left: -42px;
-  background: linear-gradient(145deg, #fbcfe8 0%, #f9a8d4 55%, #f472b6 100%);
+  background: linear-gradient(
+    145deg,
+    #fbcfe8 0%,
+    var(--rogerbot-accent-2) 55%,
+    var(--rogerbot-accent) 100%
+  );
   border-radius: 20px;
-  border: 3px solid #be185d;
-  box-shadow: 0 6px 0 #9d174d, 0 10px 20px rgba(190, 24, 93, 0.25);
+  border: 3px solid var(--rogerbot-accent);
+  box-shadow: 0 6px 0 rgba(157, 23, 77, 0.95),
+    0 10px 20px var(--rogerbot-shadow-head);
   animation: roger-float 2.8s ease-in-out infinite;
 }
 
@@ -2665,7 +2671,7 @@ body.welcome-modal-open {
   width: 28px;
   height: 12px;
   margin-left: -14px;
-  border: 3px solid #831843;
+  border: 3px solid var(--rogerbot-ink);
   border-top: none;
   border-radius: 0 0 20px 20px;
 }
@@ -2677,16 +2683,16 @@ body.welcome-modal-open {
   width: 26px;
   height: 26px;
   background: linear-gradient(145deg, #fff, #fce7f3);
-  border: 2px solid #db2777;
+  border: 2px solid var(--rogerbot-accent-2);
   border-radius: 50%;
   font-size: 0.85rem;
   font-weight: 800;
-  color: #be185d;
+  color: var(--rogerbot-accent);
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
-  box-shadow: 0 2px 6px rgba(190, 24, 93, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
 }
 
 .welcome-modal-title {
@@ -2790,6 +2796,12 @@ body.welcome-modal-open {
 .rogerbot-widget {
   position: relative;
   z-index: 96;
+  /* Variáveis padrão do Rogerbot — serão sobrescritas por `.page-cardapio.cardapio-theme-*` */
+  --rogerbot-accent: #be185d;
+  --rogerbot-accent-2: #db2777;
+  --rogerbot-ink: #831843;
+  --rogerbot-shadow-bar: rgba(157, 23, 77, 0.35);
+  --rogerbot-shadow-head: rgba(190, 24, 93, 0.25);
 }
 
 .rogerbot-widget-launch {
@@ -2806,10 +2818,10 @@ body.welcome-modal-open {
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  background: linear-gradient(165deg, #fce7f3 0%, #fbcfe8 45%, #f472b6 100%);
-  border: 3px solid #be185d;
+  background: linear-gradient(165deg, #fce7f3 0%, #fbcfe8 45%, var(--rogerbot-accent) 100%);
+  border: 3px solid var(--rogerbot-accent);
   box-shadow:
-    0 8px 22px rgba(157, 23, 77, 0.35),
+    0 8px 22px var(--rogerbot-shadow-bar),
     0 2px 0 rgba(255, 255, 255, 0.35) inset;
   -webkit-tap-highlight-color: transparent;
   overflow: hidden;
@@ -2821,6 +2833,12 @@ body.welcome-modal-open {
 
 .rogerbot-widget-launch:hover {
   filter: brightness(1.04);
+}
+
+.rogerbot-open .rogerbot-widget-launch {
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
 }
 
 .rogerbot-widget-backdrop {
@@ -3050,6 +3068,47 @@ body.rogerbot-open {
   .rogerbot-widget-launch {
     transition: none;
   }
+}
+
+/* Tema do Rogerbot — cor baseada no cardápio */
+.page-cardapio.cardapio-theme-burger .rogerbot-widget {
+  --rogerbot-accent: #ea580c;
+  --rogerbot-accent-2: #fdba74;
+  --rogerbot-ink: #1c1917;
+  --rogerbot-shadow-bar: rgba(234, 88, 12, 0.35);
+  --rogerbot-shadow-head: rgba(234, 88, 12, 0.25);
+}
+
+.page-cardapio.cardapio-theme-pastel .rogerbot-widget {
+  --rogerbot-accent: #ca8a04;
+  --rogerbot-accent-2: #fde047;
+  --rogerbot-ink: #1c1917;
+  --rogerbot-shadow-bar: rgba(202, 138, 4, 0.35);
+  --rogerbot-shadow-head: rgba(202, 138, 4, 0.25);
+}
+
+.page-cardapio.cardapio-theme-pizza .rogerbot-widget {
+  --rogerbot-accent: #991b1b;
+  --rogerbot-accent-2: #b91c1c;
+  --rogerbot-ink: #1c1917;
+  --rogerbot-shadow-bar: rgba(153, 27, 27, 0.35);
+  --rogerbot-shadow-head: rgba(153, 27, 27, 0.25);
+}
+
+.page-cardapio.cardapio-theme-sweet .rogerbot-widget {
+  --rogerbot-accent: #d97706;
+  --rogerbot-accent-2: #fcd34d;
+  --rogerbot-ink: #1c1917;
+  --rogerbot-shadow-bar: rgba(217, 119, 6, 0.35);
+  --rogerbot-shadow-head: rgba(217, 119, 6, 0.25);
+}
+
+.page-cardapio.cardapio-theme-default .rogerbot-widget {
+  --rogerbot-accent: #64748b;
+  --rogerbot-accent-2: #94a3b8;
+  --rogerbot-ink: #0f172a;
+  --rogerbot-shadow-bar: rgba(100, 116, 139, 0.35);
+  --rogerbot-shadow-head: rgba(100, 116, 139, 0.25);
 }
 
 /* ========== Cardápio (itens) — mesmo fundo da home (foto + overlay escuro) ========== */

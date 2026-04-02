@@ -49,13 +49,13 @@ export function mountRogerbotWidget() {
         <header class="rogerbot-widget-header">
           <div class="rogerbot-widget-header-bot" aria-hidden="true">${BOT_HTML}</div>
           <div class="rogerbot-widget-header-text">
-            <h2 id="rogerbot-title" class="rogerbot-widget-title">Rogerbot</h2>
+            <h2 id="rogerbot-title" class="rogerbot-widget-title">Roger</h2>
             <p class="rogerbot-widget-sub">Assistente virtual</p>
           </div>
           <button type="button" class="rogerbot-widget-close" data-rogerbot-close aria-label="Fechar painel">×</button>
         </header>
         <div class="rogerbot-widget-messages" data-rogerbot-messages>
-          <p class="rogerbot-bubble rogerbot-bubble--bot">Olá! Ótima escolha. 😊 Sou o Rogerbot — seu assistente virtual. Como posso te ajudar?</p>
+          <p class="rogerbot-bubble rogerbot-bubble--bot">Olá! Ótima escolha. 😊 Eu sou o Roger, seu assistente virtual. Como posso te ajudar?</p>
         </div>
         <div class="rogerbot-widget-chips" data-rogerbot-chips></div>
         <form class="rogerbot-widget-input-row" id="rogerbot-input-form">
