@@ -2,6 +2,12 @@ import { loadMenuData } from "./data-loader.js";
 import { addItem } from "./cart.js";
 import { initCartBadge } from "./cart-badge.js";
 import { DEFAULT_HOME_HERO } from "./theme-assets.js";
+import {
+  renderComboWood,
+  renderPosterPastel,
+  renderPosterBurger,
+  setBodyLayoutClass,
+} from "./cardapio-layouts.js";
 
 function formatMoney(n) {
   return Number(n).toLocaleString("pt-BR", {
@@ -45,6 +51,34 @@ function applyStoreHeroBackground(store) {
     strip.style.backgroundImage = `url(${JSON.stringify(url)})`;
     strip.classList.remove("is-hidden");
   }
+}
+
+function getMenuLayout(cat) {
+  return (cat && cat.menuLayout) || "default";
+}
+
+function applyLayoutBackground(store, layout) {
+  const strip = document.getElementById("cardapio-hero-strip");
+  if (layout !== "default") {
+    document.body.style.removeProperty("--cardapio-bg-photo");
+    if (strip) {
+      strip.style.backgroundImage = "";
+      strip.classList.add("is-hidden");
+    }
+    return;
+  }
+  applyStoreHeroBackground(store);
+}
+
+function setLayoutChrome(layout) {
+  const bar = document.querySelector(".cardapio-bar");
+  if (layout !== "default") bar?.classList.add("cardapio-bar--minimal");
+  else bar?.classList.remove("cardapio-bar--minimal");
+}
+
+function resetLayoutsAndChrome() {
+  setBodyLayoutClass("default");
+  setLayoutChrome("default");
 }
 
 function toast(msg) {
@@ -176,6 +210,7 @@ function buildItemCard(item, catId, catTitle, sectionTitle, categoryTheme) {
 
 function renderCategoryPicker(root, categories, storeName, store) {
   applyCategoryTheme("default");
+  resetLayoutsAndChrome();
   applyStoreHeroBackground(store || {});
   document.title = `Cardápio — ${storeName || "Point do Roger"}`;
   const titleEl = document.getElementById("cat-title");
@@ -227,13 +262,18 @@ async function renderCardapio() {
     const cat = categories.find((c) => c.id === catId);
     if (!cat) {
       applyCategoryTheme("default");
+      resetLayoutsAndChrome();
       applyStoreHeroBackground(store);
       root.className = "items-list";
       root.innerHTML = `<p class="error-msg">Categoria não encontrada.</p>`;
       return;
     }
     applyCategoryTheme(cat.theme);
-    applyStoreHeroBackground(store);
+    const layout = getMenuLayout(cat);
+    setBodyLayoutClass(layout);
+    applyLayoutBackground(store, layout);
+    setLayoutChrome(layout);
+
     document.title = `${cat.title} — ${store.name || "Point do Roger"}`;
     const titleNode = document.getElementById("cat-title");
     if (titleNode) titleNode.textContent = cat.title;
@@ -246,10 +286,24 @@ async function renderCardapio() {
     if (subEl) {
       const sub = (cat.subtitle || "").trim();
       subEl.textContent = sub;
-      subEl.hidden = !sub;
+      subEl.hidden = !sub || layout !== "default";
     }
 
     const catTitle = cat.title || "Item";
+
+    if (layout === "combo-wood") {
+      renderComboWood(root, cat, catId, catTitle, store, toast);
+      return;
+    }
+    if (layout === "poster-pastel") {
+      renderPosterPastel(root, cat, catId, catTitle, store, toast);
+      return;
+    }
+    if (layout === "poster-burger") {
+      renderPosterBurger(root, cat, catId, catTitle, store, toast);
+      return;
+    }
+
     root.className = "items-list cardapio-items-panel";
     root.innerHTML = "";
 
@@ -281,6 +335,7 @@ async function renderCardapio() {
     }
   } catch (e) {
     applyCategoryTheme("default");
+    resetLayoutsAndChrome();
     applyStoreHeroBackground({});
     root.className = "items-list";
     root.innerHTML = `<p class="error-msg">Erro ao carregar itens.</p>`;

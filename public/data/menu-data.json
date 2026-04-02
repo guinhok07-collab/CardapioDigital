@@ -14,11 +14,70 @@
   },
   "categories": [
     {
-      "id": "hamburgueres",
-      "title": "Hambúrgueres",
+      "id": "burgers-menu",
+      "title": "Menu Burgers",
       "emoji": "🍔",
-      "subtitle": "Combos com batata e refrigerante — abaixo: individual, casal ou para grupos.",
+      "subtitle": "Cardápio clássico — tradicionais, gourmet, acompanhamentos e adicionais.",
       "theme": "burger",
+      "menuLayout": "poster-burger",
+      "sections": [
+        {
+          "title": "Tradicionais",
+          "column": "left",
+          "items": [
+            { "id": "bm-misto", "name": "Misto quente", "description": "Mussarela, presunto e maionese especial", "price": 13 },
+            { "id": "bm-bauru", "name": "Bauru", "description": "Presunto, mussarela, tomate, orégano e maionese especial", "price": 15 },
+            { "id": "bm-hburguer", "name": "H-Burguer", "description": "Hambúrguer, mussarela e molho especial", "price": 17 },
+            { "id": "bm-hbacon", "name": "H-Bacon", "description": "Hambúrguer, mussarela, bacon e molho especial", "price": 19 },
+            { "id": "bm-hsalada", "name": "H-Salada", "description": "Hambúrguer, mussarela, alface, tomate, cebola e molho especial", "price": 18 },
+            { "id": "bm-bigtasty", "name": "Big Tasty", "description": "Hambúrguer, mussarela, alface, tomate, cebola e molho tasty", "price": 24 },
+            { "id": "bm-cheddar", "name": "Cheddar", "description": "Hambúrguer, queijo cheddar e cebola caramelizada", "price": 22 }
+          ]
+        },
+        {
+          "title": "Gourmet",
+          "subtitle": "Hambúrguer de carne giga 180g",
+          "column": "left",
+          "items": [
+            { "id": "bm-g-classic", "name": "Classic Burguer", "description": "Hambúrguer, queijo cheddar, catupiry, alface, tomate, cebola roxa e maionese da casa", "price": 38 },
+            { "id": "bm-g-bacon", "name": "Bacon Burguer", "description": "Hambúrguer, bacon crocante, cheddar cremoso, mussarela, molho barbecue, tomate e cebola roxa", "price": 48 },
+            { "id": "bm-g-turbo", "name": "Turbo Cheddar", "description": "Dois hambúrgueres, queijo cheddar, mussarela, pepperoni, molho cheddar, cebola caramelizada, tomate e barbecue", "price": 53 },
+            { "id": "bm-g-mega", "name": "Mega Triplo Tasty", "description": "Três hambúrgueres, queijo cheddar, muito bacon, alface, tomate, cebola roxa e molho tasty", "price": 65 }
+          ]
+        },
+        {
+          "title": "Acompanhamentos",
+          "column": "right",
+          "items": [
+            { "id": "bm-ac-cone", "name": "Batata cone (cheddar e bacon)", "description": "", "price": 20 },
+            { "id": "bm-ac-pp", "name": "Batata PP", "description": "", "price": 10 },
+            { "id": "bm-ac-p", "name": "Batata P", "description": "", "price": 20 },
+            { "id": "bm-ac-m", "name": "Batata M", "description": "", "price": 28 },
+            { "id": "bm-ac-g", "name": "Batata G", "description": "", "price": 35 },
+            { "id": "bm-ac-m-cb", "name": "Batata M (cheddar e bacon)", "description": "", "price": 40 },
+            { "id": "bm-ac-g-cb", "name": "Batata G (cheddar e bacon)", "description": "", "price": 52 }
+          ]
+        },
+        {
+          "title": "Adicionais",
+          "column": "right",
+          "items": [
+            { "id": "bm-ad-hamb", "name": "Hambúrguer de carne 180g", "description": "", "price": 12 },
+            { "id": "bm-ad-queijo", "name": "Queijo cheddar ou mussarela", "description": "", "price": 5 },
+            { "id": "bm-ad-cat", "name": "Cheddar ou catupiry", "description": "", "price": 10 },
+            { "id": "bm-ad-pp", "name": "Pepperoni ou bacon", "description": "", "price": 8 },
+            { "id": "bm-ad-maio", "name": "Maionese da casa", "description": "", "price": 4 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hamburgueres",
+      "title": "Combos de lanches",
+      "emoji": "🍟",
+      "subtitle": "Combos com batata e refrigerante — individual, casal ou para grupos.",
+      "theme": "burger",
+      "menuLayout": "combo-wood",
       "sections": [
         {
           "title": "Combo individual",
@@ -172,6 +231,7 @@
       "emoji": "🥟",
       "subtitle": "Pastéis salgados, especiais e porções — tudo organizado abaixo.",
       "theme": "pastel",
+      "menuLayout": "poster-pastel",
       "sections": [
         {
           "title": "Pastéis clássicos",

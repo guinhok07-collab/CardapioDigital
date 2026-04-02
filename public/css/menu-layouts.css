@@ -1,0 +1,598 @@
+/* Layouts fiéis às artes — Point do Roger (fontes no HTML) */
+
+.cardapio-main.layout-poster-burger,
+.cardapio-main.layout-poster-pastel,
+.cardapio-main.layout-combo-wood {
+  max-width: 100% !important;
+  padding-left: max(0.65rem, env(safe-area-inset-left, 0px));
+  padding-right: max(0.65rem, env(safe-area-inset-right, 0px));
+}
+
+.cardapio-bar--minimal .cardapio-bar-head {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cardapio-bar--minimal {
+  border-bottom-color: transparent;
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* ========== Combo madeira (ref WhatsApp) ========== */
+.page-cardapio.page-cardapio--clean.layout-combo-wood {
+  background-color: #1c1208 !important;
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.42) 0%, rgba(20, 12, 6, 0.55) 100%),
+    url("../images/menu/ref-combos-wood.png") !important;
+  background-size: cover, cover !important;
+  background-position: center, center !important;
+  background-attachment: scroll !important;
+  color: #fafaf9;
+}
+
+.combo-wood-root {
+  padding: 0.25rem 0 1rem;
+}
+
+.combo-wood-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.combo-wood-combos {
+  margin: 0;
+  font-family: "Oswald", "Bebas Neue", sans-serif;
+  font-size: clamp(2rem, 8vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #fff;
+  line-height: 1;
+}
+
+.combo-wood-sub {
+  margin: 0.2rem 0 0;
+  font-family: "Oswald", sans-serif;
+  font-size: clamp(1.5rem, 6vw, 2.1rem);
+  font-weight: 700;
+  color: #ea580c;
+  line-height: 1.1;
+}
+
+.combo-wood-de {
+  font-family: "Inter", sans-serif;
+  font-size: 0.55em;
+  font-style: italic;
+  color: #fb923c;
+  margin-right: 0.2em;
+}
+
+.combo-wood-head-photo {
+  border-radius: 12px;
+  min-height: 120px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.2)),
+    url("https://images.unsplash.com/photo-1568901346375-23c945677c61?auto=format&fit=crop&w=600&q=80");
+  background-size: cover;
+  background-position: center;
+  border: 2px solid rgba(234, 88, 12, 0.45);
+}
+
+.combo-wood-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+@media (max-width: 520px) {
+  .combo-wood-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .combo-wood-head {
+    grid-template-columns: 1fr;
+  }
+}
+
+.combo-wood-panel {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(234, 88, 12, 0.35);
+}
+
+.combo-wood-panel-bar {
+  background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%);
+  padding: 0.45rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.combo-wood-panel-title {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #fff;
+  line-height: 1.25;
+}
+
+.combo-wood-panel-sub {
+  font-size: 0.58rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.combo-wood-panel-body {
+  padding: 0.45rem 0.5rem 0.55rem;
+}
+
+.combo-wood-item {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.combo-wood-item:last-child {
+  border-bottom: none;
+}
+
+.combo-wood-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.combo-wood-item-name {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #fff;
+}
+
+.combo-wood-item-price {
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.combo-wood-item-desc {
+  margin: 0.2rem 0 0.35rem;
+  font-size: 0.62rem;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.combo-wood-add {
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.35rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(234, 88, 12, 0.9);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.combo-wood-foot {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding: 0.75rem;
+  background: rgba(234, 88, 12, 0.92);
+  border-radius: 12px;
+  font-size: 0.72rem;
+}
+
+.combo-wood-foot-block {
+  display: flex;
+  gap: 0.45rem;
+  align-items: flex-start;
+  color: #fff;
+}
+
+.combo-wood-foot-block--addr {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.combo-wood-foot-ico {
+  font-size: 1.25rem;
+}
+
+.combo-wood-foot-label {
+  margin: 0;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.65rem;
+}
+
+.combo-wood-foot-phone {
+  margin: 0.15rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.combo-wood-foot-addr {
+  margin: 0;
+  line-height: 1.35;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ========== Poster burgers preto + laranja ========== */
+.page-cardapio.page-cardapio--clean.layout-poster-burger {
+  background: #000 none !important;
+  background-color: #000 !important;
+  color: #fff;
+}
+
+.burger-poster {
+  max-width: 720px;
+  margin: 0 auto;
+  padding-bottom: 1rem;
+}
+
+.burger-poster-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.burger-poster-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.burger-poster-menu {
+  font-family: "Bebas Neue", "Oswald", sans-serif;
+  font-size: clamp(2.2rem, 10vw, 3.2rem);
+  letter-spacing: 0.12em;
+  color: #fff;
+}
+
+.burger-poster-line {
+  width: min(280px, 80%);
+  height: 4px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.burger-poster-burguers {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2rem, 9vw, 2.8rem);
+  color: #ff8c00;
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 24px rgba(255, 140, 0, 0.35);
+}
+
+.burger-poster-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+  align-items: start;
+}
+
+@media (max-width: 600px) {
+  .burger-poster-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.burger-poster-sec-title {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #fff;
+  margin: 0 0 0.4rem;
+}
+
+.burger-poster-sec-title--orange {
+  color: #ff8c00;
+}
+
+.burger-poster-sec-sub {
+  margin: 0 0 0.5rem;
+  font-size: 0.58rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+  line-height: 1.35;
+}
+
+.burger-poster-burger-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.35rem;
+  align-items: start;
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.burger-poster-item-name {
+  display: block;
+  font-family: "Oswald", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ff8c00;
+  line-height: 1.2;
+}
+
+.burger-poster-item-desc {
+  display: block;
+  font-size: 0.55rem;
+  color: rgba(255, 255, 255, 0.88);
+  text-transform: uppercase;
+  line-height: 1.3;
+  margin-top: 0.15rem;
+}
+
+.burger-poster-price-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffb347, #ff8c00 55%, #c65d00);
+  border: 3px solid #c2410c;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.burger-poster-price-ring span {
+  font-size: 0.58rem;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.burger-poster-add,
+.burger-poster-add-mini {
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 140, 0, 0.25);
+  color: #ff8c00;
+  font-weight: 800;
+  font-size: 1rem;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.burger-poster-simple-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.62rem;
+}
+
+.burger-poster-simple-name {
+  flex: 1;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.burger-poster-simple-price {
+  color: #ff8c00;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.burger-poster-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.burger-poster-circle {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 5px solid #ff8c00;
+  box-shadow: 0 0 0 2px rgba(194, 65, 12, 0.6);
+  background-size: cover;
+  background-position: center;
+}
+
+.burger-poster-circle--a {
+  background-image: url("https://images.unsplash.com/photo-1553979459-b859fc4b6b29?auto=format&fit=crop&w=400&h=400&q=80");
+}
+
+.burger-poster-circle--b {
+  background-image: url("https://images.unsplash.com/photo-1568901346375-23c945677c61?auto=format&fit=crop&w=400&h=400&q=80");
+}
+
+.burger-poster-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 2px solid rgba(255, 140, 0, 0.4);
+  font-size: 0.68rem;
+}
+
+.burger-poster-foot-item {
+  display: flex;
+  gap: 0.4rem;
+  align-items: flex-start;
+  max-width: 48%;
+}
+
+.burger-poster-foot-item--addr {
+  text-align: right;
+  flex-direction: row-reverse;
+}
+
+.burger-poster-foot-item strong {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+/* ========== Pastel amarelo / preto ========== */
+.page-cardapio.page-cardapio--clean.layout-poster-pastel {
+  background: #050505 none !important;
+  background-color: #050505 !important;
+  color: #fff;
+}
+
+.pastel-poster-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.75fr);
+  gap: 0.5rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .pastel-poster-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .pastel-poster-right {
+    min-height: 180px;
+    order: -1;
+  }
+}
+
+.pastel-poster-left {
+  padding: 0 0.15rem;
+}
+
+.pastel-poster-h1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(2.5rem, 12vw, 4rem);
+  color: #ffb800;
+  margin: 0 0 0.75rem;
+  letter-spacing: 0.06em;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+.pastel-poster-tag {
+  text-align: center;
+  padding: 0.35rem 0.5rem;
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.45rem;
+}
+
+.pastel-poster-tag--white {
+  background: #fff;
+  color: #111;
+}
+
+.pastel-poster-tag--yellow {
+  background: #ffb800;
+  color: #111;
+}
+
+.pastel-poster-sec-sub {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 0.5rem;
+  line-height: 1.4;
+}
+
+.pastel-poster-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.pastel-poster-row-line {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.pastel-poster-name {
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  flex-shrink: 0;
+  max-width: 58%;
+}
+
+.pastel-poster-dots {
+  flex: 1;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.35);
+  min-height: 4px;
+  margin: 0 0.15rem;
+}
+
+.pastel-poster-price {
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ffb800;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pastel-poster-add {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 184, 0, 0.5);
+  background: rgba(255, 184, 0, 0.15);
+  color: #ffb800;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.pastel-poster-right {
+  position: relative;
+  border-radius: 12px;
+  min-height: 320px;
+  overflow: hidden;
+}
+
+.pastel-poster-right-bg {
+  position: absolute;
+  inset: 0;
+  background: url("../images/menu/ref-pastel.png") center / cover no-repeat;
+  opacity: 0.9;
+}
+
+.pastel-poster-right-plate {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.25) 0%, transparent 50%);
+  pointer-events: none;
+}
