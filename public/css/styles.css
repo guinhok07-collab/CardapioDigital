@@ -31,9 +31,15 @@
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   min-height: 100dvh;
+  min-height: 100svh;
   background: var(--bg);
   color: var(--text);
   line-height: 1.5;
@@ -462,7 +468,8 @@ body.page-home:not(.page-home--clean) {
 .main {
   max-width: 560px;
   margin: 0 auto;
-  padding: 0 1rem 5rem;
+  padding: 0 max(1rem, env(safe-area-inset-right, 0px)) max(5rem, calc(3rem + env(safe-area-inset-bottom, 0px)))
+    max(1rem, env(safe-area-inset-left, 0px));
 }
 
 #cardapio {
@@ -651,7 +658,8 @@ body.page-home:not(.page-home--clean) {
 .bar-top {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  padding: 0.75rem 1rem 1rem;
+  padding: max(0.75rem, calc(0.45rem + env(safe-area-inset-top, 0px))) max(1rem, env(safe-area-inset-right, 0px)) 1rem
+    max(1rem, env(safe-area-inset-left, 0px));
   position: sticky;
   top: 0;
   z-index: 10;
@@ -1764,13 +1772,16 @@ body.page-home:not(.page-home--clean) {
   z-index: 1;
   max-width: 520px;
   margin: 0 auto;
-  padding: 1.25rem 1rem 3rem;
+  padding: 1.25rem max(1rem, env(safe-area-inset-right, 0px)) 3rem
+    max(1rem, env(safe-area-inset-left, 0px));
+  padding-bottom: max(3rem, calc(2rem + env(safe-area-inset-bottom, 0px)));
 }
 
 .home-bar {
   position: sticky;
   top: 0;
   z-index: 40;
+  padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
   background: rgba(15, 23, 42, 0.82);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1780,7 +1791,8 @@ body.page-home:not(.page-home--clean) {
 .home-bar-inner {
   max-width: 520px;
   margin: 0 auto;
-  padding: 0.65rem 1rem;
+  padding: 0.65rem max(1rem, env(safe-area-inset-right, 0px)) 0.65rem
+    max(1rem, env(safe-area-inset-left, 0px));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1796,6 +1808,8 @@ body.page-home:not(.page-home--clean) {
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: -0.01em;
+  min-height: 44px;
+  padding: 0.25rem 0;
 }
 
 .home-bar-logo {
@@ -1817,6 +1831,8 @@ body.page-home:not(.page-home--clean) {
   color: #e2e8f0;
   font-weight: 500;
   font-size: 0.9rem;
+  min-height: 44px;
+  padding: 0.25rem 0;
 }
 
 .page-home--clean .cart-badge:not(.is-empty) {
@@ -1894,10 +1910,12 @@ body.page-home:not(.page-home--clean) {
     transform 0.15s ease;
 }
 
-.home-cat-card:hover {
-  border-color: rgba(226, 232, 240, 0.35);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
-  transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+  .home-cat-card:hover {
+    border-color: rgba(226, 232, 240, 0.35);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    transform: translateY(-1px);
+  }
 }
 
 .home-cat-emoji {
@@ -1942,20 +1960,27 @@ body.page-home:not(.page-home--clean) {
 
 .home-fab {
   position: fixed;
-  bottom: max(1rem, env(safe-area-inset-bottom));
+  bottom: max(0.75rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem));
   left: 50%;
   transform: translateX(-50%);
   z-index: 40;
-  padding: 0.7rem 1.3rem;
+  min-height: 48px;
+  padding: 0.65rem 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  max-width: min(92vw, calc(100vw - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px) - 1rem));
   border-radius: 999px;
   background: #1e293b;
   color: #f8fafc !important;
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1rem;
   letter-spacing: 0.01em;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(148, 163, 184, 0.25);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .home-fab-count {
@@ -1964,7 +1989,8 @@ body.page-home:not(.page-home--clean) {
 
 .home-footer {
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 2rem max(1rem, env(safe-area-inset-right, 0px))
+    max(1.5rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px));
   font-size: 0.82rem;
   color: #64748b;
 }
@@ -1999,6 +2025,7 @@ body.page-home:not(.page-home--clean) {
   position: sticky;
   top: 0;
   z-index: 40;
+  padding-top: max(0.35rem, env(safe-area-inset-top, 0px));
   background: rgba(15, 23, 42, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -2009,7 +2036,8 @@ body.page-home:not(.page-home--clean) {
 .page-cardapio.page-cardapio--clean .cardapio-bar-inner {
   max-width: 520px;
   margin: 0 auto;
-  padding: 0.65rem 1rem 0.5rem;
+  padding: 0.65rem max(1rem, env(safe-area-inset-right, 0px)) 0.5rem
+    max(1rem, env(safe-area-inset-left, 0px));
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2022,6 +2050,10 @@ body.page-home:not(.page-home--clean) {
   font-size: 0.9rem;
   text-decoration: none;
   letter-spacing: -0.01em;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .page-cardapio.page-cardapio--clean .cardapio-bar-back:hover {
@@ -2036,12 +2068,14 @@ body.page-home:not(.page-home--clean) {
   color: #e2e8f0;
   font-weight: 500;
   font-size: 0.9rem;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .page-cardapio.page-cardapio--clean .cardapio-bar-head {
   max-width: 520px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 max(1rem, env(safe-area-inset-right, 0px)) 0 max(1rem, env(safe-area-inset-left, 0px));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2066,7 +2100,7 @@ body.page-home:not(.page-home--clean) {
 .page-cardapio.page-cardapio--clean .cardapio-cat-subtitle {
   margin: 0.35rem auto 0;
   max-width: 520px;
-  padding: 0 1rem;
+  padding: 0 max(1rem, env(safe-area-inset-right, 0px)) 0 max(1rem, env(safe-area-inset-left, 0px));
   font-size: 0.875rem;
   font-weight: 400;
   color: rgba(203, 213, 225, 0.92);
@@ -2078,7 +2112,9 @@ body.page-home:not(.page-home--clean) {
   max-width: 520px;
   margin-left: auto;
   margin-right: auto;
-  padding: 0 1rem 5rem;
+  padding: 0 max(1rem, env(safe-area-inset-right, 0px))
+    max(5.5rem, calc(4.25rem + env(safe-area-inset-bottom, 0px)))
+    max(1rem, env(safe-area-inset-left, 0px));
 }
 
 .page-cardapio.page-cardapio--clean .cardapio-items-panel {
@@ -2120,6 +2156,10 @@ body.page-home:not(.page-home--clean) {
   color: #f8fafc;
 }
 
+.page-cardapio.page-cardapio--clean .item-body {
+  min-width: 0;
+}
+
 .page-cardapio.page-cardapio--clean .item-body h2 {
   color: #f8fafc;
   font-size: 1rem;
@@ -2148,7 +2188,11 @@ body.page-home:not(.page-home--clean) {
   background: #1e293b;
   color: #f8fafc;
   font-weight: 500;
+  font-size: 1rem;
+  min-height: 48px;
+  padding: 0.65rem 1rem;
   border: 1px solid rgba(148, 163, 184, 0.25);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .page-cardapio.page-cardapio--clean .btn-add-cart:hover {
@@ -2193,8 +2237,10 @@ body.page-home:not(.page-home--clean) {
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
 }
 
-.page-cardapio.page-cardapio--clean .picker-link:hover {
-  border-color: rgba(226, 232, 240, 0.35);
+@media (hover: hover) and (pointer: fine) {
+  .page-cardapio.page-cardapio--clean .picker-link:hover {
+    border-color: rgba(226, 232, 240, 0.35);
+  }
 }
 
 .page-cardapio.page-cardapio--clean .picker-sub {
@@ -2208,6 +2254,8 @@ body.page-home:not(.page-home--clean) {
 
 .page-cardapio.page-cardapio--clean .cardapio-site-footer {
   color: #64748b;
+  padding: 2rem max(1rem, env(safe-area-inset-right, 0px))
+    max(1.5rem, env(safe-area-inset-bottom, 0px)) max(1rem, env(safe-area-inset-left, 0px));
 }
 
 .page-cardapio.page-cardapio--clean .cardapio-site-footer .footnote {
@@ -2218,4 +2266,87 @@ body.page-home:not(.page-home--clean) {
   background: #1e293b;
   color: #f8fafc;
   border: 1px solid rgba(148, 163, 184, 0.2);
+  bottom: max(5rem, calc(4.5rem + env(safe-area-inset-bottom, 0px)));
+  max-width: calc(
+    100vw - 2rem - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)
+  );
+  text-align: center;
+}
+
+.page-cardapio.page-cardapio--clean .cart-toast.is-visible {
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Celulares: itens em coluna (foto em cima), áreas de toque confortáveis */
+@media (max-width: 480px) {
+  .page-cardapio.page-cardapio--clean .item-card {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0.9rem;
+  }
+
+  .page-cardapio.page-cardapio--clean .item-img-wrap {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    max-height: 220px;
+  }
+
+  .page-cardapio.page-cardapio--clean .item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .page-cardapio.page-cardapio--clean .item-body h2 {
+    font-size: clamp(1rem, 4.2vw, 1.0625rem);
+  }
+
+  .page-cardapio.page-cardapio--clean .item-desc {
+    font-size: 0.9375rem;
+    line-height: 1.45;
+  }
+
+  .page-home--clean .home-cat-card {
+    padding: 1rem max(1rem, env(safe-area-inset-right, 0px)) 1rem
+      max(1rem, env(safe-area-inset-left, 0px));
+  }
+
+  .page-home--clean .home-intro-lead {
+    font-size: max(0.9375rem, 16px);
+  }
+
+  .page-home--clean .home-intro-sub {
+    font-size: max(0.875rem, 15px);
+  }
+
+  .page-cardapio.page-cardapio--clean .picker-link {
+    min-height: 48px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .page-cardapio.page-cardapio--clean .item-img-wrap {
+    max-height: 200px;
+  }
+
+  .page-home--clean .home-intro-name {
+    font-size: clamp(1.25rem, 5.5vw, 1.5rem);
+  }
+}
+
+/* Formulário carrinho: 16px mín. evita zoom automático no iOS ao focar */
+@media (max-width: 540px) {
+  .checkout-card input,
+  .checkout-card textarea,
+  .checkout-card select {
+    font-size: 16px;
+  }
+}
+
+.page-carrinho {
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
 }
