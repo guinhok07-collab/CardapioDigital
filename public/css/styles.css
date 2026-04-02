@@ -63,10 +63,10 @@ body.page-home {
 .home-top-inner {
   max-width: min(640px, 100%);
   margin: 0 auto;
-  padding: 0.5rem 0.85rem 0.65rem;
+  padding: 0.55rem 1rem 0.7rem;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.5rem;
 }
 
 .home-quick-nav {
@@ -1751,19 +1751,19 @@ body.page-home {
 }
 
 .page-home--flyer .home-menu-panel {
-  max-width: min(560px, 96vw);
+  max-width: min(640px, 100%);
   min-height: min(92vh, 980px);
-  padding: 0.35rem 0.75rem 2.25rem;
+  padding: 0.5rem 1rem 2.5rem;
 }
 
 .home-menu-header {
   text-align: center;
-  padding: 0.75rem 0.5rem 0.5rem;
+  padding: 0.85rem 0.65rem 0.6rem;
 }
 
 .home-menu-kicker {
   font-family: "Bebas Neue", Impact, sans-serif;
-  font-size: clamp(2.75rem, 14vw, 4.25rem);
+  font-size: clamp(3.25rem, 16vw, 5rem);
   line-height: 0.95;
   margin: 0;
   color: var(--flyer-orange);
@@ -1772,8 +1772,8 @@ body.page-home {
 }
 
 .home-store-name {
-  margin: 0.35rem 0 0;
-  font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.1rem, 4.2vw, 1.4rem);
   font-weight: 700;
   color: #fff;
   text-transform: uppercase;
@@ -1781,23 +1781,25 @@ body.page-home {
 }
 
 .home-menu-tagline {
-  margin: 0.4rem 0 0;
-  font-size: 0.78rem;
+  margin: 0.5rem 0 0;
+  font-size: clamp(0.9rem, 3.2vw, 1.05rem);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.4;
 }
 
 .home-menu-sub {
-  margin: 0.25rem 0 0;
-  font-size: 0.72rem;
-  color: rgba(253, 230, 138, 0.85);
+  margin: 0.35rem 0 0;
+  font-size: clamp(0.85rem, 2.8vw, 0.95rem);
+  color: rgba(253, 230, 138, 0.9);
   font-style: italic;
+  line-height: 1.45;
 }
 
 .home-menu-board {
-  margin-top: 0.65rem;
-  padding: 0.65rem 0.55rem 0.75rem;
-  border-radius: 4px;
+  margin-top: 0.85rem;
+  padding: 1rem 0.85rem 1.1rem;
+  border-radius: 6px;
   background: var(--flyer-paper);
   border: 1px solid rgba(249, 115, 22, 0.25);
   box-shadow:
@@ -1834,11 +1836,11 @@ body.page-home {
 .flyer-cat {
   display: flex;
   align-items: flex-start;
-  gap: 0.35rem;
-  padding: 0.45rem 0.4rem;
+  gap: 0.5rem;
+  padding: 0.65rem 0.5rem;
   text-decoration: none;
   color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   transition: background 0.15s ease;
 }
 
@@ -1852,8 +1854,8 @@ body.page-home {
 }
 
 .flyer-cat-emoji {
-  font-size: 0.95rem;
-  line-height: 1.3;
+  font-size: 1.2rem;
+  line-height: 1.35;
   flex-shrink: 0;
   filter: grayscale(0.1);
 }
@@ -1871,28 +1873,28 @@ body.page-home {
 }
 
 .flyer-cat-name {
-  font-size: 0.78rem;
+  font-size: clamp(0.95rem, 3.4vw, 1.1rem);
   font-weight: 700;
   color: #fff;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .flyer-cat-go {
   flex-shrink: 0;
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--flyer-orange);
   line-height: 1;
 }
 
 .flyer-cat-desc {
-  margin: 0.15rem 0 0;
-  font-size: 0.62rem;
-  line-height: 1.3;
-  color: rgba(255, 255, 255, 0.72);
+  margin: 0.2rem 0 0;
+  font-size: clamp(0.8rem, 2.8vw, 0.9rem);
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.78);
   font-style: italic;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1917,6 +1919,11 @@ body.page-home {
   color: #fff;
 }
 
+.home-quick-nav--flyer {
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  gap: 1.25rem;
+}
+
 .home-quick-nav--flyer a {
   color: #fde68a !important;
 }
@@ -1930,11 +1937,16 @@ body.page-home {
   border-color: rgba(249, 115, 22, 0.45) !important;
   background: rgba(249, 115, 22, 0.12) !important;
   color: #fff !important;
-  font-size: 0.72rem;
+  font-size: clamp(0.82rem, 2.8vw, 0.95rem);
+  padding: 0.45rem 0.75rem;
 }
 
 .home-cat-pill--flyer:hover {
   background: rgba(249, 115, 22, 0.25) !important;
+}
+
+.page-home--flyer .home-cat-pill-emoji {
+  font-size: 1.1rem;
 }
 
 .cart-fab--flyer {
