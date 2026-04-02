@@ -1,6 +1,7 @@
 import { loadMenuData } from "./data-loader.js";
 import { addItem } from "./cart.js";
 import { initCartBadge } from "./cart-badge.js";
+import { THEME_BG } from "./theme-assets.js";
 
 function formatMoney(n) {
   return Number(n).toLocaleString("pt-BR", {
@@ -35,31 +36,27 @@ function applyCategoryTheme(_theme) {
 
 function clearCategoryBackground() {
   document.body.style.removeProperty("--cardapio-bg-photo");
+  const strip = document.getElementById("cardapio-hero-strip");
+  if (strip) {
+    strip.style.backgroundImage = "";
+    strip.classList.add("is-hidden");
+  }
 }
 
-/** Quando não há `backgroundUrl` no JSON, usa a mesma ideia dos temas antigos (foto suave). */
-const THEME_BG_FALLBACK = {
-  burger:
-    "https://images.unsplash.com/photo-1568901346375-23c945677c61?auto=format&fit=crop&w=1920&q=80",
-  pastel:
-    "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=1920&q=80",
-  pizza:
-    "https://images.unsplash.com/photo-1513104890138-7c7496599c91?auto=format&fit=crop&w=1920&q=80",
-  sweet:
-    "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1920&q=80",
-  default:
-    "https://images.unsplash.com/photo-1544145945-f0a224ac7a5e?auto=format&fit=crop&w=1920&q=80",
-};
-
-/** Fundo por categoria: `backgroundUrl` no JSON ou fallback por `theme`. */
+/** Fundo + faixa no topo: `backgroundUrl` no JSON ou fotos “cardápio gourmet” por `theme`. */
 function applyCategoryBackground(cat) {
   let url = (cat && cat.backgroundUrl && String(cat.backgroundUrl).trim()) || "";
   if (!url && cat && cat.theme) {
-    const fb = THEME_BG_FALLBACK[String(cat.theme)];
+    const fb = THEME_BG[String(cat.theme)];
     if (fb) url = fb;
   }
   if (url) {
     document.body.style.setProperty("--cardapio-bg-photo", `url(${JSON.stringify(url)})`);
+    const strip = document.getElementById("cardapio-hero-strip");
+    if (strip) {
+      strip.style.backgroundImage = `url(${JSON.stringify(url)})`;
+      strip.classList.remove("is-hidden");
+    }
   } else {
     clearCategoryBackground();
   }

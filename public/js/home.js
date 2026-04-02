@@ -1,5 +1,10 @@
 import { loadMenuData } from "./data-loader.js";
 import { initCartBadge } from "./cart-badge.js";
+import {
+  DEFAULT_HOME_HERO,
+  homeHeroOverlayGradient,
+  THEME_TOP_STRIP,
+} from "./theme-assets.js";
 
 function escapeHtml(s) {
   const d = document.createElement("div");
@@ -10,24 +15,17 @@ function escapeHtml(s) {
 function applyHomeHeroImage(store) {
   const el = document.getElementById("home-hero-bg");
   if (!el) return;
-  const url = (store.homeHeroImage || "").trim();
-  document.body.classList.toggle("home-has-hero-img", Boolean(url));
-  if (url) {
-    const u = JSON.stringify(url);
-    /* Camada 1: overlay escuro para leitura; camada 2: foto em cover */
-    el.style.backgroundImage = [
-      "linear-gradient(180deg, rgba(15,23,42,.82) 0%, rgba(15,23,42,.55) 38%, rgba(2,6,23,.88) 100%)",
-      `url(${u})`,
-    ].join(", ");
-    el.style.backgroundSize = "cover, cover";
-    el.style.backgroundRepeat = "no-repeat, no-repeat";
-    el.style.backgroundPosition = "center, center";
-  } else {
-    el.style.backgroundImage = "";
-    el.style.backgroundSize = "";
-    el.style.backgroundRepeat = "";
-    el.style.backgroundPosition = "";
-  }
+  const custom = (store.homeHeroImage || "").trim();
+  const url = custom || DEFAULT_HOME_HERO;
+  document.body.classList.add("home-has-hero-img");
+  const u = JSON.stringify(url);
+  el.style.backgroundImage = [
+    homeHeroOverlayGradient(),
+    `url(${u})`,
+  ].join(", ");
+  el.style.backgroundSize = "cover, cover";
+  el.style.backgroundRepeat = "no-repeat, no-repeat";
+  el.style.backgroundPosition = "center, center";
 }
 
 function renderHome(data) {
@@ -89,14 +87,20 @@ function renderHome(data) {
     const a = document.createElement("a");
     a.className = "home-cat-card";
     a.href = `cardapio.html#cat=${encodeURIComponent(cat.id)}`;
+    const theme = String(cat.theme || "default");
+    a.dataset.theme = theme;
+    const topUrl = THEME_TOP_STRIP[theme] || THEME_TOP_STRIP.default;
     const sub = (cat.subtitle || "").trim();
     a.innerHTML = `
-      <span class="home-cat-emoji" aria-hidden="true">${escapeHtml(cat.emoji || "📋")}</span>
-      <div class="home-cat-text">
-        <span class="home-cat-name">${escapeHtml(cat.title || "Categoria")}</span>
-        ${sub ? `<span class="home-cat-desc">${escapeHtml(sub)}</span>` : ""}
+      <div class="home-cat-top" style="background-image:url(${JSON.stringify(topUrl)})" aria-hidden="true"></div>
+      <div class="home-cat-body">
+        <span class="home-cat-emoji" aria-hidden="true">${escapeHtml(cat.emoji || "📋")}</span>
+        <div class="home-cat-text">
+          <span class="home-cat-name">${escapeHtml(cat.title || "Categoria")}</span>
+          ${sub ? `<span class="home-cat-desc">${escapeHtml(sub)}</span>` : ""}
+        </div>
+        <span class="home-cat-arrow" aria-hidden="true">→</span>
       </div>
-      <span class="home-cat-arrow" aria-hidden="true">→</span>
     `;
     grid.appendChild(a);
   });
