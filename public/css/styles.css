@@ -1857,6 +1857,10 @@ body.page-home:not(.page-home--clean) {
   position: relative;
   z-index: 35;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
   padding: 0.45rem max(1rem, env(safe-area-inset-right, 0px)) 0.5rem
     max(1rem, env(safe-area-inset-left, 0px));
   background: linear-gradient(
@@ -1866,6 +1870,13 @@ body.page-home:not(.page-home--clean) {
   );
   border-bottom: 1px solid rgba(203, 213, 225, 0.2);
   box-shadow: 0 0 24px rgba(148, 163, 184, 0.12);
+}
+
+.home-open-hours {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgba(226, 232, 240, 0.85);
 }
 
 .neon-open {
@@ -1885,6 +1896,27 @@ body.page-home:not(.page-home--clean) {
     0 0 38px rgba(100, 116, 139, 0.45),
     0 0 54px rgba(71, 85, 105, 0.28);
   animation: neon-open-blink 3.4s cubic-bezier(0.45, 0.05, 0.25, 1) infinite;
+  transform-origin: center center;
+}
+
+/* Letreiro neon CLOSED (piscando) — em vermelho */
+.neon-closed {
+  display: inline-block;
+  font-family: "Bebas Neue", "Impact", "Arial Narrow", sans-serif;
+  font-size: clamp(1.65rem, 6vw, 2rem);
+  font-weight: 400;
+  letter-spacing: 0.55em;
+  padding-left: 0.55em;
+  text-transform: uppercase;
+  color: #ffe4e6;
+  line-height: 1;
+  text-shadow:
+    0 0 3px rgba(255, 255, 255, 0.85),
+    0 0 10px rgba(254, 202, 202, 0.95),
+    0 0 22px rgba(248, 113, 113, 0.75),
+    0 0 38px rgba(220, 38, 38, 0.45),
+    0 0 54px rgba(165, 28, 28, 0.28);
+  animation: neon-open-blink 2.9s cubic-bezier(0.45, 0.05, 0.25, 1) infinite;
   transform-origin: center center;
 }
 
@@ -1952,6 +1984,13 @@ body.page-home:not(.page-home--clean) {
 
 @media (prefers-reduced-motion: reduce) {
   .neon-open {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .neon-closed {
     animation: none;
     opacity: 1;
     filter: none;

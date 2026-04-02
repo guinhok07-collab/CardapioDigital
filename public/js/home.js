@@ -110,6 +110,63 @@ function renderHome(data) {
   });
 }
 
+function parseHHMM(s) {
+  const v = String(s || "")
+    .trim()
+    .replace(/[^\d:]/g, "");
+  const m = v.match(/^(\d{1,2}):(\d{2})$/);
+  if (!m) return null;
+  const hh = Math.max(0, Math.min(23, parseInt(m[1], 10)));
+  const mm = Math.max(0, Math.min(59, parseInt(m[2], 10)));
+  return hh * 60 + mm;
+}
+
+function isOpenNow(store, now) {
+  const openMins = parseHHMM(store.openTime);
+  const closeMins = parseHHMM(store.closeTime);
+
+  // Sem horário definido: assume aberto.
+  if (openMins == null || closeMins == null) return true;
+
+  // Se o horário "fecha depois" (ex.: 18:00 -> 02:00)
+  if (openMins < closeMins) {
+    return now >= openMins && now < closeMins;
+  }
+
+  // Janela noturna
+  return now >= openMins || now < closeMins;
+}
+
+function updateOpenClosedBanner(store) {
+  const statusEl = document.getElementById("home-open-status");
+  const hoursEl = document.getElementById("home-open-hours");
+  if (!statusEl || !hoursEl) return;
+
+  const openTime = String(store.openTime || "").trim();
+  const closeTime = String(store.closeTime || "").trim();
+  const hoursText =
+    (String(store.hoursText || "").trim() ||
+      (openTime && closeTime ? `Horário: ${openTime} - ${closeTime}` : "Horário: --"));
+
+  hoursEl.textContent = hoursText;
+
+  const now = new Date();
+  const nowMins = now.getHours() * 60 + now.getMinutes();
+  const open = isOpenNow(store, nowMins);
+
+  if (open) {
+    statusEl.textContent = "OPEN";
+    statusEl.classList.add("neon-open");
+    statusEl.classList.remove("neon-closed");
+    statusEl.setAttribute("aria-label", "Aberto");
+  } else {
+    statusEl.textContent = "CLOSED";
+    statusEl.classList.add("neon-closed");
+    statusEl.classList.remove("neon-open");
+    statusEl.setAttribute("aria-label", "Fechado");
+  }
+}
+
 function setupWelcomeModal(store) {
   const modal = document.getElementById("welcome-modal");
   if (!modal) return;
@@ -156,7 +213,8 @@ async function init() {
   try {
     const data = await loadMenuData();
     renderHome(data);
-    // Welcome modal (robô gigante) desativado: manter apenas o Rogerbot flutuante.
+    updateOpenClosedBanner(data.store || {});
+    setInterval(() => updateOpenClosedBanner(data.store || {}), 30000);
   } catch (e) {
     document.getElementById("category-grid").innerHTML =
       `<p class="error-msg">Erro ao carregar o cardápio.</p>`;
