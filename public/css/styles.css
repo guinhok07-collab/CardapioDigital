@@ -1756,15 +1756,16 @@ body.page-home:not(.page-home--clean) {
   color: #fafafa;
 }
 
-/* ========== Home — cores vivas + fundo foto em destaque ========== */
+/* ========== Home — tom quente (madeira/carne); cards em marrom vidro, sem azul ========== */
 .page-home--clean {
   --home-accent: #fb923c;
   --home-accent-2: #fbbf24;
   --home-accent-soft: rgba(251, 146, 60, 0.2);
-  --home-surface: rgba(30, 27, 75, 0.72);
-  --home-border: rgba(251, 146, 60, 0.45);
+  /* Superfície tipo “vidro fumê” marrom — combina com foto de lanche */
+  --home-surface: rgba(41, 37, 36, 0.82);
+  --home-border: rgba(180, 83, 9, 0.42);
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
-  background: linear-gradient(165deg, #1e1b4b 0%, #7c2d12 42%, #0f172a 78%, #020617 100%);
+  background: linear-gradient(165deg, #292524 0%, #7c2d12 38%, #1c1917 75%, #0c0a09 100%);
   color: #fffbeb;
 }
 
@@ -1774,9 +1775,9 @@ body.page-home:not(.page-home--clean) {
   z-index: 0;
   background: linear-gradient(
     155deg,
-    rgba(79, 70, 229, 0.35) 0%,
-    rgba(234, 88, 12, 0.2) 40%,
-    rgba(15, 23, 42, 0.85) 100%
+    rgba(69, 26, 3, 0.42) 0%,
+    rgba(120, 53, 15, 0.28) 38%,
+    rgba(28, 25, 23, 0.72) 100%
   );
   pointer-events: none;
 }
@@ -1815,13 +1816,13 @@ body.page-home:not(.page-home--clean) {
   padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
   background: linear-gradient(
     180deg,
-    rgba(67, 20, 7, 0.92) 0%,
-    rgba(15, 23, 42, 0.88) 100%
+    rgba(28, 25, 23, 0.94) 0%,
+    rgba(67, 20, 7, 0.9) 100%
   );
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(251, 146, 60, 0.35);
-  box-shadow: 0 4px 24px rgba(234, 88, 12, 0.12);
+  border-bottom: 1px solid rgba(180, 83, 9, 0.35);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
 }
 
 .home-bar-inner {
@@ -1942,14 +1943,19 @@ body.page-home:not(.page-home--clean) {
   border-radius: 12px;
   text-decoration: none;
   color: inherit;
-  background: var(--home-surface);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--home-border);
+  background: linear-gradient(
+    160deg,
+    rgba(68, 64, 60, 0.88) 0%,
+    rgba(41, 37, 36, 0.9) 45%,
+    rgba(28, 25, 23, 0.92) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(180, 83, 9, 0.38);
   box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(251, 146, 60, 0.08) inset,
-    0 8px 32px rgba(234, 88, 12, 0.12);
+    0 6px 24px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(253, 186, 116, 0.06) inset,
+    0 4px 20px rgba(120, 53, 15, 0.15);
   transition:
     border-color 0.18s ease,
     box-shadow 0.18s ease,
@@ -1962,8 +1968,8 @@ body.page-home:not(.page-home--clean) {
   flex-shrink: 0;
   background-size: cover;
   background-position: center;
-  border-bottom: 2px solid rgba(251, 146, 60, 0.35);
-  box-shadow: inset 0 -12px 28px rgba(15, 23, 42, 0.35);
+  border-bottom: 2px solid rgba(154, 52, 18, 0.45);
+  box-shadow: inset 0 -14px 32px rgba(12, 10, 9, 0.55);
 }
 
 .home-cat-body {
@@ -1975,10 +1981,10 @@ body.page-home:not(.page-home--clean) {
 
 @media (hover: hover) and (pointer: fine) {
   .home-cat-card:hover {
-    border-color: rgba(251, 146, 60, 0.75);
+    border-color: rgba(251, 146, 60, 0.55);
     box-shadow:
-      0 12px 36px rgba(0, 0, 0, 0.45),
-      0 0 24px rgba(251, 146, 60, 0.2);
+      0 12px 36px rgba(0, 0, 0, 0.5),
+      0 0 28px rgba(180, 83, 9, 0.22);
     transform: translateY(-1px);
   }
 }
@@ -2067,18 +2073,18 @@ body.page-home:not(.page-home--clean) {
   color: #fb923c;
 }
 
-/* ========== Cardápio (itens) — cores vivas + foto de fundo em destaque ========== */
+/* ========== Cardápio (itens) — mesmo tom quente da home ========== */
 .page-cardapio.page-cardapio--clean {
-  --cat-surface: rgba(30, 27, 75, 0.78);
-  --cat-border: rgba(251, 146, 60, 0.42);
+  --cat-surface: rgba(41, 37, 36, 0.85);
+  --cat-border: rgba(180, 83, 9, 0.4);
   font-family: "Inter", "Segoe UI", system-ui, sans-serif;
   background-color: #1c1917;
   background-image: linear-gradient(
       165deg,
-      rgba(49, 46, 129, 0.42) 0%,
-      rgba(234, 88, 12, 0.22) 30%,
-      rgba(15, 23, 42, 0.38) 52%,
-      rgba(2, 6, 23, 0.82) 100%
+      rgba(69, 26, 3, 0.38) 0%,
+      rgba(234, 88, 12, 0.2) 28%,
+      rgba(28, 25, 23, 0.42) 52%,
+      rgba(12, 10, 9, 0.88) 100%
     ),
     var(--cardapio-bg-photo, none);
   background-size: cover, cover;
@@ -2247,14 +2253,19 @@ body.page-home:not(.page-home--clean) {
   gap: 0.55rem;
   align-items: start;
   padding: 0.55rem 0.65rem;
-  background: var(--cat-surface);
+  background: linear-gradient(
+    155deg,
+    rgba(68, 64, 60, 0.92) 0%,
+    rgba(41, 37, 36, 0.9) 55%,
+    rgba(28, 25, 23, 0.92) 100%
+  );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--cat-border);
   border-radius: 10px;
   box-shadow:
-    0 2px 14px rgba(0, 0, 0, 0.28),
-    0 0 20px rgba(251, 146, 60, 0.08);
+    0 2px 14px rgba(0, 0, 0, 0.35),
+    0 0 18px rgba(120, 53, 15, 0.12);
   color: #fffbeb;
 }
 
@@ -2308,7 +2319,7 @@ body.page-home:not(.page-home--clean) {
 .page-cardapio.page-cardapio--clean .item-img-placeholder {
   min-height: 72px;
   height: 72px;
-  background: linear-gradient(145deg, #4338ca, #7c2d12);
+  background: linear-gradient(145deg, #57534e, #44403c);
 }
 
 .page-cardapio.page-cardapio--clean .btn-add-cart {
@@ -2356,7 +2367,11 @@ body.page-home:not(.page-home--clean) {
   padding: 1rem 1.05rem;
   border-radius: 12px;
   border: 1px solid var(--cat-border);
-  background: var(--cat-surface);
+  background: linear-gradient(
+    160deg,
+    rgba(68, 64, 60, 0.92) 0%,
+    rgba(41, 37, 36, 0.9) 100%
+  );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: #fffbeb;
@@ -2364,8 +2379,8 @@ body.page-home:not(.page-home--clean) {
   font-size: 1rem;
   letter-spacing: -0.01em;
   box-shadow:
-    0 2px 16px rgba(0, 0, 0, 0.28),
-    0 0 24px rgba(251, 146, 60, 0.1);
+    0 2px 16px rgba(0, 0, 0, 0.35),
+    0 0 20px rgba(120, 53, 15, 0.12);
 }
 
 @media (hover: hover) and (pointer: fine) {
